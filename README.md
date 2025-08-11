@@ -22,7 +22,7 @@ Contact: [cryptocurrency-f25-staff@mit.edu](cryptocurrency-f25-staff@mit.edu)
 
 Description:
 
-Bitcoin and other cryptographic currencies have been rapidly gaining adoption. This course explores the design of Bitcoin and other blockchains and how they function in practice, focusing on cryptography, game theory, security, networking, and system architecture. In Fall 2025, this course will be co-taught with the University of Brasilia, connecting students across both institutions through joint projects and discussions, to get a more global view on the impact and use cases of the technology. Programming assignments in the course will give practical experience interacting with cryptocurrency software. Prior programming experience is required, and exposure to computer science systems or security courses is recommended.
+Bitcoin and other cryptographic currencies have been rapidly gaining adoption. This course explores the design of Bitcoin and other blockchains and how they function in practice, focusing on cryptography, game theory, security, networking, and system architecture. In Fall 2025, this course will be co-taught with the University of Brasilia, connecting students through projects and discussions. Our goal is to get a more global view of the potential impact and use cases of the technology. Programming assignments in the course will give practical experience interacting with cryptocurrency software. Prior programming experience is required, and exposure to computer science systems or security courses is recommended.
 
 Office hours: TBD
 
@@ -33,9 +33,9 @@ Office hours location: TBD
 NOTE: The schedule is in flux and is subject to change.
 
 Content covers essential technologies behind Bitcoin and other cryptocurrencies. Answering questions such as:
-- *Foundations* (Lectures 1-8): What problems do cryptocurrencies aim to solve, and what primitives enable decentralized digital money?
-- *Protocol Design and Tradeoffs* (Lectures 9-14): How do cryptocurrency architectures reflect their goals, and what are the key design choices and constraints?
-- *Scaling, Privacy, and Future Directions* (15-23): What are the current limitations of cryptocurrency systems, and what emerging designs seek to address them?
+- **Foundations** (lectures 1-8): What problems do cryptocurrencies aim to solve, and what primitives enable decentralized digital money?
+- **Protocol Design and Tradeoffs** (lectures 9-14): How do cryptocurrency architectures reflect their goals, and what are the key design choices and constraints?
+- **Scaling, Privacy, and Future Directions** (lectures 15-23): What are the current limitations of cryptocurrency systems, and what emerging designs seek to address them?
 
 | Date | Lecture | Main Concept | Guiding Questions | Topics Covered | Readings |
 |------|---------|--------------|-------------------|----------------|----------|

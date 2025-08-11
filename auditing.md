@@ -4,9 +4,9 @@
 
 Thank you for your interest in auditing MAS.S62, Cryptocurrency Design and Engineering!
 
-We're excited to offer any computer science faculty who might be
+We're excited to offer the opportunity to audit this course to any computer science faculty who might be
 interested in teaching this course at their own university in the
-future the opportunity to audit this course. This means you can:
+future. This means you can:
 
 * Attend lectures remotely (via Zoom)
 * Access all course material
