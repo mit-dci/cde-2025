@@ -33,13 +33,13 @@ Office hours location: TBD
 NOTE: The schedule is in flux and is subject to change.
 
 Content covers essential technologies behind Bitcoin and other cryptocurrencies. Answering questions such as:
-- Foundations (Lectures 1-8): What problems do cryptocurrencies aim to solve, and what primitives enable decentralized digital money?
-- Protocol Design & Tradeoffs (Lectures 9-14): How do cryptocurrency architectures reflect their goals, and what are the key design choices and constraints?
-- Scaling, Privacy & Future Directions (15-23): What are the current limitations of cryptocurrency systems, and what emerging designs seek to address them?
+- *Foundations* (Lectures 1-8): What problems do cryptocurrencies aim to solve, and what primitives enable decentralized digital money?
+- *Protocol Design and Tradeoffs* (Lectures 9-14): How do cryptocurrency architectures reflect their goals, and what are the key design choices and constraints?
+- *Scaling, Privacy, and Future Directions* (15-23): What are the current limitations of cryptocurrency systems, and what emerging designs seek to address them?
 
 | Date | Lecture | Main Concept | Guiding Questions | Topics Covered | Readings |
 |------|---------|--------------|-------------------|----------------|----------|
-| 2025-09-04 | 1 | Nature of money | What's money? Why do we need a new kind of money? | Money as a thing: stones, shells, salt, gold. Money as a set of functions: medium of exchange, store of value, unit of account. Money as a liability (IOU): fiat money and intermediaries.| [Aristotle](https://classics.mit.edu/Aristotle/politics.1.one.html) - Politics, Book I, Part IX |
+| 2025-09-04 | 1 | Nature of money | What is money? Why might we want a new kind of money? | Money as a thing: stones, shells, salt, gold. Money as a set of functions: medium of exchange, store of value, unit of account. Money as a liability (IOU): fiat money and intermediaries.| [Aristotle](https://classics.mit.edu/Aristotle/politics.1.one.html) - Politics, Book I, Part IX |
 | 2025-09-09 | 2 | Trust Minimization — Network Design  | How can a decentralized network implement money and payments without a central authority? | Requirements for decentralized money: scarcity, transferability, verifiability. Bitcoin architecture overview (ledger + consensus + incentives). Other paradigms: early e-cash attempts, other cryptocurrencies.| [Bitcoin: A Peer-to-Peer Electronic Cash System](https://bitcoin.org/en/bitcoin-paper), [Untraceable Electronic Cash](https://www.wisdom.weizmann.ac.il/~/naor/PAPERS/untrace.pdf) |
 | 2025-09-11 | 3 | Cryptographic Commitments and Proofs | How can data be securely committed to without revealing it, and why is this critical for digital money? | Cryptographic hash functions. Properties: preimage resistance, collision resistance. Commitments and their use in contracts, blockchains. Merkle trees and proofs.| [Hash Functions](https://youtu.be/tLkHk__-M6Q?si=BC0bRDMqAF63PWEu) by Christof Paar |
 | 2025-09-16 | 4 | Digital signatures and public-key cryptography | How can ownership and control of digital assets be proven without revealing private information? | Public-key cryptography basics. Digital signatures (ECDSA, Schnorr). Verification vs secrecy. Role of keys in cryptocurrency systems. Introduction to finite field DH | [New Directions in Cryptography](https://www.cs.jhu.edu/~rubin/courses/sp03/papers/diffie.hellman.pdf), [Simple Schnorr Multi-Signatures with Applications in Bitcoin](https://eprint.iacr.org/2018/068.pdf) |
@@ -84,9 +84,9 @@ All labs are due by 11:59 PM on the day specified.
 
 You may form groups of 1-4 students and prepare a presentation and a ~4 page paper on one of the following: 
 
-Project proposals are due 2025-12-04 29:59 EDT - submit them via github repo.
-
 1. Create a new application using the concepts learned in class (see provided list for suggestions)
 2. Update or add a new feature to an existing system like Bitcoin, Ethereum, or another cryptocurrency or shared ledger implementation
 3. Propose a new formalization or framework
 4. Pose and solve a new question or problem
+
+Project proposals are due 2025-12-04 29:59 EDT.
