@@ -1,38 +1,37 @@
-# Cryptocurrency Design and Engineering 2025
+# MAS.S62 Fall 2025
+# Cryptocurrency Design and Engineering
 
 ### NOTE:  This document is a draft and is subject to change.
 
-This is the material for a course taught at MIT and University of Brasilia in 2025
-
 ## Information
 
-Instructors:  [Edil Medeiros](edil@vinteum.org) (UnB), [Tadge Dryja](tdryja@gmail.com) and [Neha Narula](narula@media.mit.edu) (MIT)
+Instructors:  [Tadge Dryja](tdryja@gmail.com) and [Neha Narula](narula@media.mit.edu) (MIT), [Edil Medeiros](edil@vinteum.org) (UnB)
 
-## Course Syllabus
+Time: T/Th 11 AM - 12:30 PM
 
-Fall 2025
+Place: E15-359
 
-Abstract: Bitcoin and other cryptographic currencies have been rapidly gaining adoption. This course explores the design of Bitcoin and other blockchains and how they function in practice, focusing on cryptography, game theory, security, networking, and system architecture. In Fall 2025, this course will be co-taught with the University of Brasilia, connecting students across both institutions through joint projects and discussions, to get a more global view on the impact and use cases of the technology. Programming assignments in the course will give practical experience interacting with cryptocurrency software. Prior programming experience is required, and exposure to computer science systems or security courses is recommended.
+Discord: TBD
 
-Location: E15-341
+You are welcome to ask us questions via email.  However, if you think your
+question would be useful for others to see, please file it as [an issue](https://github.com/mit-dci/cde-2025/issues)
+in this repository!
 
-Time: T/TH 11-12:30PM
+Contact: [cryptocurrency-f25-staff@mit.edu](cryptocurrency-f25-staff@mit.edu)
 
-Grading Structure:Letter grade
 
-Units: (3-0-9) 
+Description:
 
-Class Participation 20%
+Bitcoin and other cryptographic currencies have been rapidly gaining adoption. This course explores the design of Bitcoin and other blockchains and how they function in practice, focusing on cryptography, game theory, security, networking, and system architecture. In Fall 2025, this course will be co-taught with the University of Brasilia, connecting students across both institutions through joint projects and discussions, to get a more global view on the impact and use cases of the technology. Programming assignments in the course will give practical experience interacting with cryptocurrency software. Prior programming experience is required, and exposure to computer science systems or security courses is recommended.
 
-Problem sets and labs 40%
+Office hours: TBD
 
-Final project 40%
+Office hours location: TBD
 
-Final projects are small groups (2-4) implementing new software, or extensions of existing software, that interact with the Bitcoin network, Ethereum, or another cryptocurrency or shared ledger.
+## Schedule
 
-Contact: dci@media.mit.edu
+NOTE: The schedule is in flux and is subject to change.
 
-### Class Schedule:
 Content covers essential technologies behind Bitcoin and other cryptocurrencies. Answering questions such as:
 - Foundations (Lectures 1-8): What problems do cryptocurrencies aim to solve, and what primitives enable decentralized digital money?
 - Protocol Design & Tradeoffs (Lectures 9-14): How do cryptocurrency architectures reflect their goals, and what are the key design choices and constraints?
@@ -70,16 +69,24 @@ Content covers essential technologies behind Bitcoin and other cryptocurrencies.
 | 2025-12-09 | 24 | Final Presentations  | |   | |
 
 
-#### Assignments
-There will be four problem sets/take home assignments and a final project. These are all hands-on programming exercises with provided libraries.
-1) One way functions, digital signatures, and proof of work. Starting with hash functions, implement Lamport signatures as well as a Lamport signature forger - Due September 25th - TBC
-2) Consensus. Building off the Lamport signature forger, create a proof of work block header miner as well as code for block distribution (no transaction pool) - Due October 7th - TBC
-3) Schnorr signatures and privacy. Implement Schnorr signing and verification, as well as ECDH for silent-payment style address detection - Due October 16th - TBC
-4) Transactions. Claim funds from known weak key outputs (using previous signature forging code), Make OP_RETURN outputs to claim the coins. - Due October 28th - TBC
+## Labs and Problem Sets
 
-#### Final project
-You may form groups of 1-4 students and prepare a presentation and a ~4 page paper on one of the following: Project proposals are due 2025-11-04 29:59 EDT - submit them via github repo.
-1) Create a new application using the concepts learned in class (see provided list for suggestions)
-2) Update or add a new feature to an existing system like Bitcoin, Ethereum, or another cryptocurrency or shared ledger implementation
-3) Propose a new formalization or framework
-4) Pose and solve a new question or problem
+| # | Due Date | Assignment | 
+|---|------|------------|
+| 1 | 2025-09-25 | One way functions, digital signatures, and proof-of-work. |
+| 2 | 2025-10-07 | Mining |
+| 3 | 2025-10-16 | Schnorr signatures and privacy |
+| 4 | 2025-10-28 | UTXOHunt |
+
+All labs are due by 11:59 PM on the day specified.
+
+## Final projects
+
+You may form groups of 1-4 students and prepare a presentation and a ~4 page paper on one of the following: 
+
+Project proposals are due 2025-12-04 29:59 EDT - submit them via github repo.
+
+1. Create a new application using the concepts learned in class (see provided list for suggestions)
+2. Update or add a new feature to an existing system like Bitcoin, Ethereum, or another cryptocurrency or shared ledger implementation
+3. Propose a new formalization or framework
+4. Pose and solve a new question or problem
