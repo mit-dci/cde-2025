@@ -5,7 +5,7 @@
 
 ## Information
 
-Instructors:  [Tadge Dryja](tdryja@gmail.com) and [Neha Narula](narula@media.mit.edu) (MIT), [Edil Medeiros](edil@vinteum.org) (UnB)
+Instructors:  [Tadge Dryja](mailto:tdryja@gmail.com) and [Neha Narula](mailto:narula@media.mit.edu) (MIT), [Edil Medeiros](mailto:edil@vinteum.org) (UnB)
 
 Time: T/Th 11 AM - 12:30 PM
 
