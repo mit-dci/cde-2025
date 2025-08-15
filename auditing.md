@@ -23,6 +23,6 @@ We do not support:
 * Languages other than English
 
 The course schedule is available
-[here](https://github.com/mit-dci/cde-2025). Please fill out this form
-to sign up to audit the course by August 28th, 2025 (TBD). The first
-lecture is Thursday, September 4, 2025 at 11 AM ET.
+[here](https://github.com/mit-dci/cde-2025). Please fill out [this form](https://www.dci.mit.edu/dci-global-interest-form)
+to sign up to audit the course by August 28th, 2025. The first
+lecture is Tuesday, September 9, 2025 at 1 PM ET (please keep an eye on the syllabus, this might change).
