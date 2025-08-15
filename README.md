@@ -5,7 +5,7 @@
 
 ## Information
 
-Instructors: [Neha Narula](narula@media.mit.edu) (MIT), [Edil Medeiros](edil@vinteum.org) (UnB)
+Instructors: Neha Narula <narula@media.mit.edu> (MIT), Edil Medeiros <edil@vinteum.org> (UnB)
 
 Guest lecturers: [Ethan Heilman](https://www.ethanheilman.com/), [Joachim Neu](https://www.jneu.net/), [Pieter Wuille](http://pieterwuillefacts.com/), [Madars Virza](https://madars.org/), and more to be announced.
 
@@ -19,7 +19,7 @@ You are welcome to ask us questions via email.  However, if you think your
 question would be useful for others to see, please file it as [an issue](https://github.com/mit-dci/cde-2025/issues)
 in this repository!
 
-Contact: [cryptocurrency-f25-staff@mit.edu](cryptocurrency-f25-staff@mit.edu)
+Contact: <cryptocurrency-f25-staff@mit.edu>
 
 
 Description:
