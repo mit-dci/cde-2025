@@ -28,7 +28,9 @@ Bitcoin and other cryptographic currencies have been rapidly gaining adoption. T
 
 Office hours: TBD
 
-Office hours location: TBD
+Office hours location: Discord
+
+If you'd like help in-person, you can join us at DCI (E15-350) Friday afternoons. Email the staff mailing list or ask on Discord to learn more.
 
 ## Schedule
 
@@ -55,14 +57,15 @@ Content covers essential technologies behind Bitcoin and other cryptocurrencies.
 | 2025-10-14 | 12 | Computability and Smart Contracts | What can decentralized ledgers compute, and what are the limits of their programmability? | Bitcoin Script vs EVM model. Stateless computation with UTXOs. Gas models and resource metering. Turing completeness vs bounded language design. | [Ethereum Whitepaper](https://ethereum.org/en/whitepaper/) |
 | 2025-10-21 | 13 | Scalability | What options exist for scaling a decentralized currency system without sacrificing security or decentralization? | What makes scaling hard. Goals: reducing verification time, tradeoffs. On-chain scaling (block size debates). Layer 2 approaches: Lightning Network, payment channels. Sidechains and federated models. | [Bitcoin Lightning Network: Scalable off-chain instant payments](https://lightning.network/lightning-network-paper.pdf) |
 | 2025-10-21 | 14 | Scalability continued| What options exist for scaling a decentralized currency system without sacrificing security or decentralization? | Explore Ark, channel factories, coinpools, statechains, aggregation, rollups.  | [Cross-Input Signature Aggregation for Bitcoin](https://cisaresearch.org/) |
-| 2025-10-30 | 15 | Programmability | Client-side validation. Off-chain assets (stablecoins). Settlement on-chain vs. off-chain  | Discreet Log Contracts (DLCs). Oracle models and trust assumptions. | [Discreet Log Contracts](https://adiabat.github.io/dlc.pdf) |
-| 2025-10-30 | 16 | Programmability — Expressivity | What are the tradeoffs between limiting and expanding the programmability of money in a decentralized system? | Spectrum of expressivity: Bitcoin Script → Taproot/MAST → Ethereum’s EVM. What are covenants? Use cases for expressive money: contracts, escrow, vaults. Risks of expressivity:  loss of fungibility, security. Stablecoins | [Bitcoin Covenants Wiki](https://covenants.info) |
+| 2025-10-28 | 15 | Programmability | Client-side validation. Off-chain assets (stablecoins). Settlement on-chain vs. off-chain  | Discreet Log Contracts (DLCs). Oracle models and trust assumptions. | [Discreet Log Contracts](https://adiabat.github.io/dlc.pdf) |
+| 2025-10-28 | 16 | Programmability — Expressivity | What are the tradeoffs between limiting and expanding the programmability of money in a decentralized system? | Spectrum of expressivity: Bitcoin Script → Taproot/MAST → Ethereum’s EVM. What are covenants? Use cases for expressive money: contracts, escrow, vaults. Risks of expressivity:  loss of fungibility, security. Stablecoins | [Bitcoin Covenants Wiki](https://covenants.info) |
 | 2025-11-04 | 17 | Privacy | What are the design approaches for improving privacy in cryptocurrency transactions, and what are their tradeoffs? | De-anonymization heuristics. CoinJoin, PayJoin. Confidential Transactions. Stealth payments and scanning wallets. | [Confidential Transactions](https://web.archive.org/web/20150628230410/https://people.xiph.org/~greg/confidential_values.txt) |
-| 2025-11-04 | 18 | Privacy — Zero Knowledge Proofs | What are zero-knowledge proofs and how are they used in privacy-preserving systems? | Understanding privacy-preserving designs that use zero-knowledge proofs, such as Bulletproofs, Mimblewimble, and Zcash | [The Ceremony](https://radiolab.org/podcast/ceremony), [Mimblewimble](https://scalingbitcoin.org/papers/mimblewimble.pdf), [Zerocash](https://ieeexplore.ieee.org/document/6956581) 
-| 2025-11-18 | 19 | Legal and regulation | What are the risks to developing open source software that might facilitate the movement of funds? What does it mean to be custodial vs. non-custodial? | Lawyer panel  | |
+| 2025-11-04 | 18 | Privacy — Zero Knowledge Proofs | What are zero-knowledge proofs and how are they used in privacy-preserving systems? | Understanding privacy-preserving designs that use zero-knowledge proofs, such as Bulletproofs, Mimblewimble, and Zcash | [The Ceremony](https://radiolab.org/podcast/ceremony), [Mimblewimble](https://scalingbitcoin.org/papers/mimblewimble.pdf), [Zerocash](https://ieeexplore.ieee.org/document/6956581) |
+| 2025-11-11 | | MIT Holiday | |   | |
+| 2025-11-18 | 19  | Security — What can go wrong  | How can a cryptocurrency remain secure against breaks in the underlying cryptography? |Understanding quantum risk to ECDSA/ECDH. Post-quantum signature proposals. Migration challenges and backward compatibility. Explore commit/reveal schemes. | [Quantum Computing for the Very Curious](https://quantum.country/qcvc) |
+| 2025-11-18 | 20 | Unfair Behaviors  | How do design choices affect the potential for participants to extract unfair advantages? |Miner Extractable Value (MEV) concept. Flashbots and Ethereum MEV research. Bitcoin’s design defenses vs theoretical attacks. Ethical and systemic risks of MEV.  | [Flash Boys 2.0: Frontrunning, Transaction Reordering, and Consensus Instability in Decentralized Exchanges](https://arxiv.org/abs/1904.05234)|
 | 2025-11-25 | | No class | |   | |
-| 2025-12-02 | 20  | Security — What can go wrong  | How can a cryptocurrency remain secure against breaks in the underlying cryptography? |Understanding quantum risk to ECDSA/ECDH. Post-quantum signature proposals. Migration challenges and backward compatibility. Explore commit/reveal schemes. | [Quantum Computing for the Very Curious](https://quantum.country/qcvc) |
-| 2025-12-02 | 21 | Unfair Behaviors  | How do design choices affect the potential for participants to extract unfair advantages? |Miner Extractable Value (MEV) concept. Flashbots and Ethereum MEV research. Bitcoin’s design defenses vs theoretical attacks. Ethical and systemic risks of MEV.  | [Flash Boys 2.0: Frontrunning, Transaction Reordering, and Consensus Instability in Decentralized Exchanges](https://arxiv.org/abs/1904.05234)|
+| 2025-12-02 | 21 | Legal and regulation | What are the risks to developing open source software that might facilitate the movement of funds? What does it mean to be custodial vs. non-custodial? | Lawyer panel  | |
 | 2025-12-09 | 22 | Final Presentations  | |   | |
 
 
