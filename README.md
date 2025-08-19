@@ -7,7 +7,7 @@
 
 Instructors: Neha Narula <narula@media.mit.edu> (MIT), Edil Medeiros <edil@vinteum.org> (UnB)
 
-Guest lecturers: [Ethan Heilman](https://www.ethanheilman.com/), [Joachim Neu](https://www.jneu.net/), [Pieter Wuille](http://pieterwuillefacts.com/), [Madars Virza](https://madars.org/), and more to be announced.
+Guest lecturers: [Ethan Heilman](https://www.ethanheilman.com/), [Joachim Neu](https://www.jneu.net/), [Pieter Wuille](http://pieterwuillefacts.com/), [James Prestwich](https://x.com/_prestwich), [Madars Virza](https://madars.org/), and more to be announced.
 
 Time: Tuesdays 1-4 PM
 
