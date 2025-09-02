@@ -13,7 +13,7 @@ Time: Tuesdays 1-4 PM
 
 Place: E15-359
 
-Discord: TBD
+Discord: https://discord.gg/NvTWtNXybU
 
 You are welcome to ask us questions via email.  However, if you think your
 question would be useful for others to see, please file it as [an issue](https://github.com/mit-dci/cde-2025/issues)
@@ -26,7 +26,7 @@ Description:
 
 Bitcoin and other cryptographic currencies have been rapidly gaining adoption. This course explores the design of Bitcoin and other blockchains and how they function in practice, focusing on cryptography, game theory, security, networking, and system architecture. In Fall 2025, this course will be co-taught with the University of Brasilia, connecting students through projects and discussions. Our goal is to get a more global view of the potential impact and use cases of the technology. Programming assignments in the course will give practical experience interacting with cryptocurrency software. Prior programming experience is required, and exposure to computer science systems or security courses is recommended.
 
-Office hours: TBD
+Office hours: 2-3 PM ET Thursdays
 
 Office hours location: Discord
 
