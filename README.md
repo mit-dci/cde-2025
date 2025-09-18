@@ -73,10 +73,10 @@ Content covers essential technologies behind Bitcoin and other cryptocurrencies.
 
 | # | Due Date | Assignment | 
 |---|------|------------|
-| 1 | 2025-09-25 | One way functions, digital signatures, and proof-of-work. |
-| 2 | 2025-10-07 | Mining |
-| 3 | 2025-10-16 | Schnorr signatures and privacy |
-| 4 | 2025-10-28 | UTXOHunt |
+| 1 | 2025-09-30 | Hash functions |
+| 2 | 2025-10-14 | Digital signatures |
+| 3 | 2025-10-28 | Proof of work |
+| 4 | 2025-11-12 | UTXOHunt |
 
 All labs are due by 11:59 PM on the day specified.
 
@@ -90,6 +90,6 @@ You may form groups of 1-4 students and prepare a presentation and a ~5 page pap
 4. Pose and solve a new question or problem
 
 Due dates:
-* Proposals (2-3 pages) are due 2025-11-10 23:59 EDT
+* Proposals (2 pages) are due 2025-11-10 23:59 EDT
 * Presentations are in class 2025-12-09
 * Papers are due 2025-12-09 15:59 EDT
