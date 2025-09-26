@@ -1,0 +1,770 @@
+You can see my slides? Everything looked good.
+Yes? Okay, great. Awesome. So welcome to Lecture 1 of Cryptocurrency, Design and Engineering.
+I'm gonna start with a little bit of an introduction. So, my name is Neha Narula. I am a research scientist at the Media Lab, and I'm the director of the Digital Currency Initiative.
+You can call me Neha, or you can call me, if you really want, you can call me Dr. Nerula, but I'm not a professor, so please don't call me Professor Nerula. That's… if that's okay with everyone.
+So I wanted to start by, saying a little bit about who we are and what we do. So, the Digital Currency Initiative is actually just outside the hallway, down the hall. We have been part of the Media Lab at MIT for 10 years. I'm a computer scientist by background. I actually went to MIT for graduate school.
+And you can find our area over by the giant Bitcoin sign. You're welcome to come, say hello. We're mostly educators, researchers, we work on cryptocurrencies and blockchain technology, and our mission is to create the internet of value.
+So something else that's happening that's pretty exciting is we are specifically trying to, teach this course in a way where we can create material so that
+Other people can learn from this and use this content to teach it at their university next year.
+And so, in addition to the people in the classroom and me on Zoom, we also have a bunch of people joining us on Zoom from all over the world. And to all of you, thank you for being here. I know it's weird time zones in some of your countries.
+Please say your country in the chat. I think it'd be cool to know where everyone's from. Please feel free to introduce yourselves. Use the chat copiously.
+We're not going to do audio on your part from Zoom, because that would be a lot to manage, but Matt is… who's our TA for the course. Matt, can you wave? Yes, Matt will happily relay your questions, and hopefully we can… we can have you be a part of this, and we're really excited that you want to learn more about this.
+We're also co-teaching this class with Adil, from the University of Brasilia.
+Now, the timings didn't quite line up, so we're not doing sort of joint lectures, but they will be in the class Discord, and we'd love for you all to talk to them. So talk to the people at the University of Brasilia. There's a ton of students over there. Ask them about digital currency in Brazil, ask them about picks, ask them about their money problems. You know, we're figuring this out as we go, but part of the goal here is to learn about
+how money works, and how digital payments work around the world. So, take advantage of that, talk to people, talk to the auditors, everyone will be in the Discord.
+So, here's the important stuff as we get started. This is the course information. So, first of all, this is the link
+to everything about the course, okay? This is the source of truth. We are not… Canvas is not the source of truth. Emails are not the source of truth. Discord is not the source of truth. This website is the source of truth. If you see something that doesn't make sense, open a pull request. If you have questions, open an issue.
+But this is where we will post the syllabus, this is where you will see, lectures, assignments, everything for the class.
+In addition to that, we have a mailing list if you don't want to open an issue, so you can email cryptocurrency-f25-staff at MIT.edu, and you will get ahold of all of the staff members for the class. We meet Tuesdays, 1 to 4 p.m. in E15359, that is the room that those of you in person are sitting in right now, so good job, you found the room.
+Grading for the course will work as follows. There is our lectures, labs, and a final project. And I did not see the Discord link on here, but there is a Discord link linked off of the GitHub, so please join the Discord. That is where we will hold, online office hours, where you can meet the UMB students, where you can ask us questions, where you can find people to work with on a final project.
+Please join the Discord, it'll be fun.
+So one thing I want to point out really quickly, this is the syllabus that is on the GitHub page, and you will notice that there might be multiple rows for one day. So this is important, okay? Don't just look at one row and see the date, and then think, oh, that's the only class we're going to have today. The reason we're doing this is because we're trying to make it so that other people can teach this class in different formats than just
+once a week. Our class at MIT meets once a week, 1 to 4 p.m, Tuesday afternoons, but we want to make sure that we can support a format where people might need to teach twice a week. And so we're splitting it up that way, so just bear with us, just read a few rows down. So you'll notice that today, we're kind of doing two chunks. So we're going to talk about the nature of money, and then we're also going to talk about trust minimization and networking.
+But just make sure you read a few rows down to see the readings, that are relevant and the topics that are relevant to that class. So, everybody, everybody got that?
+Good? Yeah?
+Great.
+Oh, here we go. Housekeeping. So, there should be a sign-up sheet that is being passed around the class.
+If you have not put your name on it and filled out your information, please do so before you leave the class. This is really important because I know many of you are auditing, many of you are sitting in, and we want to make sure that we have all your information recorded so that we can include you and make sure you get all the links and get any information relevant to the class.
+Second, if you are an MIT student, or a BU student, or a Wellesley student, or a Harvard student, or whatever, and you haven't done so yet, please register for the class. We welcome auditors, we welcome you sitting in on this class, as long as there's space. It looks like there's space, but, you know, if there's not enough seats, we ask that you, and you're not registered for the class, that you give up your seat to someone who is registered.
+registered, but it really helps if you do register, if that's possible, because that way MIT knows that this class is interesting to you, and we have a record of you taking it.
+Like I said, join the class Discord, you don't have to take a picture of this, the link is also on GitHub. And that is where you can connect with us, you can come to online office hours, and you can, you can also meet
+the people from Brazil. And you should have figured this out by now, but just in case you haven't, OCW is going to be filming this course. So, I think most of the camera is going to be focused at the front of the room, so if you sit in the back, you shouldn't be on camera, but we can't guarantee that, so just be, you know, know that this course is being filmed, and it is going to go on the internet. So.
+Yeah, so that other people can learn from it.
+Alright, I'm gonna pause there for a second. Are there any questions about the housekeeping, the way the course is gonna run, the timing, anything like that before we start to dive into it?
+Okay, alright, I don't see… I don't see questions, but let me know if anything comes up, we will… we will get them answered. So this course is called Cryptocurrency Design and Engineering. What does that mean? Well, we're gonna answer questions like, what is a cryptocurrency?
+What primitives enable cryptocurrencies? What are cryptocurrencies made of? You know, signatures and hash functions, but lots of other things as well. What are the key design choices and trade-offs? So you might have heard that there are thousands of these things out there. Why are there so many? What do they all do? How are they different? What is going on with them? We're going to learn about the design space.
+And how do we handle things like scaling? Like, actually reaching millions or billions of users? Privacy?
+You'll learn very quickly the way these things run is that a lot of information is out in public, and financial information is very sensitive, so how do we handle privacy? And security, that is most paramount. But I also want to talk a little bit about what we are not going to do in this class. So, here is what we are not going to cover in the class. We are not going to explain how you can launch your own token. That is not what this class
+is going to be about. So, if that's why you're here, maybe this isn't such a good fit for you. We are not going to be giving you investment advice. Nothing here is investment advice. You do not want to take investment advice from me. So, nothing about how to get rich off of cryptocurrencies, sorry to tell you. And in general, we're not going to be really covering finance, and I feel like today, I just… I have to say it.
+we're not really going to be covering anything with artificial intelligence as well. So, very exciting topics, but…
+You gotta take different classes to really, to really get at those.
+So, what we are gonna cover, and what I'm gonna cover for a portion of the class, and then I'm going to turn it over to Ethan, is we're gonna start with what is money, and why does money have value anyway? And this is… this is actually kind of a complicated question.
+And then we're gonna talk a little bit about digital payments, and how they work, and some of the remaining problems with digital payments.
+So, alright, ready to get started. Matt, is there anything I need to… anything in the chat coming up that I need to talk about, or address, or… we're good? Okay.
+Great.
+So let's start with what is money. Well…
+Throughout history, like millennia, humans have used all sorts of things as money, okay? Stones, beads, shells,
+Precious metals in the form of gold coins.
+Also, ledgers. We've kept track of who owes whom what. We've… and these ledgers have represented systems of debit and credit.
+In addition to that, we have fiat, what we call fiat money, money that is issued by nation-states and isn't necessarily representative of anything in particular.
+And I have two kind of interesting examples of fiat money here. One is the $100 bill, so United States of America, money, dollars issued in the United States, and also, and this is real, 100 trillion Zimbabwe dollars. Zimbabwe underwent something called hyperinflation, and they were printing
+you know, really large notes, because they needed to in order to continue to be able to use their money. So they're both examples of fiat money.
+Today, most of the money we use is what we call commercial bank money. So this is a check, and that's a claim on the balance sheet of a commercial bank.
+And…
+very, very quickly, we have moved to using electronic money. And electronic money can come in different forms. There's credit cards, there's apps, payment apps like Zelle, or Venmo, or Cash App, or PayPal. Abroad, we have things like WeChat Pay and Alipay, M-Pesa in Kenya.
+And we also, we've got kind of, like, these on-app… on-mobile phone aggregators of different types of money, so Apple Pay or Google Pay. So…
+What we've noticed is that, over time, money has gone from analog to digital, right?
+And… but none of this really answers the question of what
+is money? What actually is money? So there have been a lot of definitions over time of what money is. We're going to go through some of those, and we're going to talk a little bit about those definitions, and where they make sense, and where they don't make sense. So, one of the things you might have heard is this definition of money as a set of functions.
+Okay, so what does that mean?
+Well, William Stanley Evans, I think, wrote about this really well in a book called Money and the Mechanism of Exchange in 1875, and that's where we see what are known as the classic definitions of money.
+And that is unit of account, medium of exchange, and store of value. Okay? What does this mean? So, unit of account is…
+a way of saying… it's basically prices. It's how do we talk about the value of an object? So you have, a coin, or you have a house, or you have, a chicken. How… how much is this thing worth? You know, how many units is this thing worth? That's units of account.
+Next, we have medium of exchange, and this idea is that money is used to actually transact, or make payments, to buy things. We use money as a medium of exchange.
+And then the third definition is store of value. And store of value means something that you can keep, and it's gonna still have the value or the purchasing power that it has tomorrow, right? And actually, Evans had a fourth
+definition of money, which is called standard of deferred payment, and this sort of introduces the idea of contracts. So.
+Money is something that you use to denominate contracts. It's… it's… you might say, I will take this delivery from you, and then I will pay you for it later, and the way that I'm gonna pay you, we're gonna denominate that in money, okay? But this definition has kind of gotten dropped over time. So you'll hear the first three, very classic.
+But…
+Honestly, I think that this is a pretty unsatisfying definition of money, okay? So, first of all, why does money have to satisfy all three of these functions?
+Second, why do all three of these functions… maybe we agree that these functions are the important functions, I'm not really sure, I'm, you know, it's not really clear. And actually, people have disagreed over history about this. Why do all three functions have to be satisfied by the same object, the same thing?
+And are all functions actually equally important?
+So, you'll see these, like, classic definitions for money, but what I want you to take away from this is actually, these are not great… this is not a definition. These are not great definitions, and this doesn't really tell us what money is, or how to think about what could become money, or what can't be money, or how money should operate.
+Another really important question is, why does money have value? Now, this might not be something that you think about a lot, but
+You can't eat money.
+you… you can't actually really use it for anything except… most of the money we have today, you literally can't use it as anything but money. It's not useful in and of itself.
+We talk about the intrinsic worth of some objects that we use as money.
+But money itself, especially the money we use today, the $20 bill, you know, a credit card, those things in and of themselves are not actually worth very much. You can pretty much get paper for free. Like, it's not very hard to get paper, right? So it's worth asking, actually.
+Why does money have value? What makes money actually have value?
+And that's a really interesting question that people have grappled with over time. So, one of the theories for why money has value is called the commodity theory of money, okay? So, the commodity theory of money is as follows.
+Imagine a world with barter. So, we're in a world where there are lots of people, and they have lots of things, and they want to trade, okay? Now, we might have something called the double coincidence of wants problem, which is as follows.
+You have sheep, I have chickens.
+I want sheep, but you don't want chickens! You want wheat.
+So how do we trade? We can't trade. We don't have this double coincidence of wants, where each of us wants the thing that the other people… the other person has.
+So you can, you know, this is the classic story of how money has risen. It's this double coincidence of wants. And it's this idea that, of course.
+Maybe one of the commodities out there, one of these goods.
+I mean, it started with intrinsic value, but one of these goods that's very common is going to become the medium of exchange. So instead of us trading in sheep and chickens and wheat, one of these things out there, probably a metal.
+But, you know, we'll see, is going to end up evolving to be the common medium in which we trade, because it's just so much easier than trying to get people who have these common, who have these double coincidence of wants. So what is money? So we talked about it being a set of functions, a unit of account.
+A store of value, A medium of exchange.
+And so, another definition of money is as an object with certain properties.
+Now, the question is, what is those prop… what are those properties that are important for something to be money?
+I'm gonna try this, we're gonna experiment with it. I want you all to throw out some properties. What are the properties that would make something be good as money?
+zoomcart
+zoomcart
+00:17:44
+Transportable.
+Neha Narula
+Neha Narula
+00:17:46
+Did you say portable?
+zoomcart
+zoomcart
+00:17:48
+Yes, trail important.
+Neha Narula
+Neha Narula
+00:17:50
+Portable, yeah. What else?
+zoomcart
+zoomcart
+00:17:55
+We have in the chat, scarcity.
+Neha Narula
+Neha Narula
+00:17:58
+Scarcity, yes, probably.
+Go ahead. Anything else?
+zoomcart
+zoomcart
+00:18:09
+The liquid…
+Neha Narula
+Neha Narula
+00:18:13
+I didn't quite catch that. What was it?
+zoomcart
+zoomcart
+00:18:16
+They would've… Like, as liquidity?
+Neha Narula
+Neha Narula
+00:18:20
+Liquidity, liquid, that's a great, that's a great thing to think about. Yes, liquidity. You want it there to be a lot of it. We'll talk about liquidity later. Okay, so some of these have been thrown out. Scarcity, I'm gonna say easily verifiable. You need to be able to actually
+tell whether this thing is real money or fake money, right? So, the, you know, the dollars that we use in our wallet, like, they have a lot of this built in. There's holograms, and special ink, and special paper, and things like that. Portable, someone said portable already. Durable. You don't want it to easily, like, fall apart, right? That whole store of value thing, it's nice if money can, you know, it's pretty durable.
+Fungible, so what does this mean? Well, it's not great if, like, one piece of money is really different than another piece of money. You want it to be roughly interchangeable, right? So fungibility is another important thing we look for.
+divisible. You know, we want to be able to pay for lots of different things, meaning we're gonna need lots of denominations of money. And then I'm gonna say acceptable. So, it's gotta be something that a lot of people accept as money.
+Okay? So this is not a full list, this is a partial list, but it's useful to think about what are these properties, are some of them more important than other properties?
+And, you know, have I… are there things that are important that I haven't mentioned here?
+So, the commodity theory of money is the idea that an object with these properties
+sort of naturally becomes money. It just becomes a thing that this, like, you know, decentralized market of traders who are all bartering, they just sort of, like, land on an object together, that maybe it's the one that has the most of these properties. But the commodity theory of money says that money starts as a commodity, and
+That… that commodity has its own value.
+Right? If it's metal, it's useful to make things. If it's chickens, you know, they're good to eat. Like, there's some actual floor on money's value, which is its use as a commodity in this market.
+So, the problem is that the commodity theory of money does not actually align with the historical record.
+So, it's a really cute story, this devil coincidence of wants thing. You want chickens, I want sheep, but actually, there's no anthropological evidence that money actually evolved from barter. So, there's this guy, David Graber, who wrote a book called Debt the First 5,000 Years, and he does a better job than I ever could in this book, which is sweeping. It's a sweeping history of money and debt.
+He provides so many stories of the ways that money has evolved, like looking at the anthropological record. It's really an incredible story. If you don't want to read the whole book, it's a very long book. We've also linked, as optional reading, a essay by Alfred Mitchell Innes, who, you know, hundreds of years before Graeber, also
+Questioned this commodity theory of money, which was very much sort of the thing of his time.
+And it's not just of his time. This is not just, you know, despite the fact that we have this book by Graeber, we had this essay by Alfred Mitchell Innes, you know, that people are like, actually, hey, this story about the double coincidence of wants doesn't seem to be real. That doesn't seem to be how money actually came to be. It's still used in economics textbooks today to motivate the story of money.
+But what I want to stress is that it doesn't mean that that list of properties is wrong, and it doesn't mean that a commodity can't be money. There have been many stories of a commodity being money, it's just that the commodity theory of money is not the whole story of money.
+Okay, so we've talked about a set of functions, we've talked about an object with certain properties. Another theory of money is that, money is, a construction of the state. So what does that mean, a construction of the state? This is the state theory of money.
+So if you look around today, you will notice that almost all widely used money is a creation of a nation-state. Like, the dollar comes from the United States. The Euro, okay, it's not exactly a nation-state, it's a collection of nation-states that have put together this, this money that goes across all of them. The pound comes from the UK. The yen comes from Japan.
+So, most of the money in use today, most of the currencies are creations of the state.
+And the state theory of money says that money has value because of the state's ability to impose taxes, or because the state can name it legal tender.
+So you have this authority, you have this nation-state out there, it has power. It's a social contract amongst the people who are a part of it, it has the ability to levy taxes on its citizenry, and it's this ability that gives money its value. It says the dollar is money, the United States says the dollar is money, you have to pay your taxes in the dollar, the dollar is legal tender, and this is what gives the dollar
+its value.
+So this is known as the state theory of money, or chartalism.
+Okay? And it's really saying that the state is a special actor here, and that they are… they are not just a special actor, they are THE special actor. And you can see why this theory would be appealing, because it actually does describe a lot of the money that we use today.
+But I want to give you some of my thoughts on the state theory of money. I think that there is some truth to this. It is very true that the nation-state has a lot of power in determining what money is.
+But I wouldn't say it's the whole truth.
+And the reason I say this is because it doesn't seem like throughout history, money has required an authority imposing taxes or legal tender. We have these stories of money, or things kind of money-like, that have popped up.
+that haven't really popped up in the context of a nation-state, okay? So to me, the state theory doesn't, you know, it's definitely part of the story, but it's not the whole story.
+Okay.
+So, the state theory, chartalism, that is one of the theories of money. There's still so much disagreement about how to define money, even today. And then the last definition I'm going to talk to you about that comes up in the literature is defining money as a liability.
+So what do I mean by that? What is a liability? That is money as an IOU, okay? And this theory says that money represents a promise to pay on behalf of an issuer.
+That issuer could be the state, but it doesn't have to be the state. It could also be a commercial bank.
+Or another institution. Or, hey, maybe I could actually come up with my own money, and anybody want to buy it, you know? You want to give me a dollar for a Neha coin? Maybe you do, maybe you don't, but why not? Anyone could be an issuer.
+well, it's easy to issue money. The challenge is to get it accepted. That's the really hard part.
+And so, money are the liabilities that are accepted broadly. And so now we add to this list of why does money have value, we had the commodity theory, we had the state theory, we have the credit theory of money.
+And the credit theory of money says that, money is valuable because it's an IOU from an issuer.
+And it has more value if we rely on the issuer to repay its IOUs. So, this is the… this is a credit theory of money. Fiat money, however.
+They're still an issuer, it's the state, but the promise to pay is circular. You can't go to the Federal Reserve with your $20 bill and ask them for $20… if you go, they're just gonna give you another $20 bill. That's it, that's all you get. You don't get paid anything else.
+Now, you might say, wait a second, Isn't the dollar back… by gold?
+No, the dollar is not backed by gold. The dollar stopped being backed by gold in… actually, not that long ago, 1971, but there's nothing backing the dollar today. There's no thing that you can take your dollars to an institution, an issuer, and get something in return for them. So, the credit theory money, again, is, like, telling part of the story, but not exactly the whole story.
+the state is incredibly privileged in that it can create laws around money, and so maybe that's why they're able to kind of create fiat money, money out of nowhere, where you're not going to get anything back for it. They're not going to pay you for it, but you still see it as valuable.
+So how do we define money today? Well, most of the money today is in IOU on commercial banks. We call this M1. That's everything in all of the checking accounts in the banking system. But this is rooted in trust in central banks.
+So, commercial banks, like JP Morgan, or Bank of America, or Wells Fargo, hold reserves at a central bank. And in the United States, that's the Federal Reserve.
+In England, that's the Bank of England. In Canada, that's the Bank of Canada. In the Euro system, it's the ECB, the European Central Bank.
+We call the reserves and all of the cash out there M0. So we have these different levels of money.
+Central banks do hold other assets. They hold other currencies, they hold gold.
+They also set interest rates and perform market operations.
+But
+the central banks don't hold enough reserves. It's not like you can come to a central bank with,
+a bill of cash and get access to those reserves. That's not how it works. It's more like the reserves, the currencies in gold, the assets that a central bank holds, they use to perform market operations, to help maintain the price and exchange rate of their currency.
+So… and who can issue money is heavily, heavily regulated in today's system. Not anybody can just go out there and issue dollars. It's really commercial banks who are allowed to create money when they give out loans.
+So this is the system of money today. You can see, kind of, little bits of all of the theories of money that I included.
+Central banks hold gold, there's a little bit of commodity theory of money in there, there's definitely states involved, and they have the… they sort of have the last bit of authority when it comes to money, that's the state theory of money, but there's also this notion of
+like, most of the money we use today is an IOU on commercial banks. They're the ones issuing it, so we've also got the credit theory of money thrown in there. And there are also these heterodox theories of money. Two of them that I'm going to call out, and this is gonna be a massive, massive oversimplification, is one called modern monetary theory.
+And, this is the idea. Modern monetary theory is quite complicated. There's a lot of different people who have a lot of different sort of views on it, so I'm not going to claim to be the expert speaking on it here, but, you know, maybe, like, a minimal thing to say is that modern monetary theorists don't believe that the state can ever run out of money, because they produce money.
+And then, on the other end of the ideological spectrum, we have Austrian economics.
+And I would say, again, huge oversimplification, but maybe in Austrian economics, they're a bit more enthusiastic about going back to the gold standard. So saying, let's back all money with commodities, we need to be able to do this, this is the only way we can keep institutions and nation states from inflating their currency and causing hyperinflation. So these are just two of the heterodox theories out there.
+In economics about… about what money is, and what it means, and how to think about it, but it's… this is a really big oversimplification.
+Something else that I really want to impress upon you is the idea that our understanding of money is constantly changing.
+The first central bank, so most of the money today is money rooted in trust of central banks, but the first central bank didn't exist until 1668. That's only a few hundred years ago. We've had versions of money, we've had economies for millennia, and the first central bank wasn't founded until 1668. Now, there were kind of, like.
+central bank-like things, but the real first central bank was in Sweden in 1668.
+And up until 1971, the dollar was on the gold standard. So Richard Nixon, this is the famous Nixon shock in 1971, took the dollar off of the gold standard. So this is when he said.
+no more gold-backing dollars. You cannot try to get gold for your dollars. We're… we're gonna… we're gonna free float… free-form float.
+That was 1971.
+That was 54 years ago, that wasn't that long ago. And so, I think it's really important to keep in mind that money is not this fixed thing, and our system of money is not that old. It is changing, our understanding of money is changing, the technology behind money is changing.
+So, I want to ask you all a question now, and maybe we can just do show of hands, and this is a little bit… this is a little bit sneaky, because we haven't even told you what Bitcoin is yet. That's kind of the entire purpose of this course. But given what I've told you so far, all of these different definitions, is Bitcoin money?
+So, raise your hand. Who thinks Bitcoin is money?
+Alright, that's a lot of hands. Okay, put your hands down. How many people don't think Bitcoin is money?
+All right, we have, we have, we have a hand, at least one hand. Yeah, the short answer is I don't know, but let's talk through this, right? Let's talk through this. So, okay, is Bitcoin money? Well, let's go with our function definitions. So, is Bitcoin a unit of account?
+Shake your head, nod your head.
+I mean, it's a unit of account for something. I don't usually price food in the grocery store in Bitcoin. I don't price my rent in Bitcoin.
+You know, do you price your tuition in Bitcoin? I don't know, maybe you should. So, I'm gonna say no, but it's kind of confusing, right? I mean, you could, you could price it in Bitcoin, it's certainly a thing, we keep track of the price.
+It's not really a medium of exchange, either. I mean, I use it as a medium of exchange sometimes, but probably if I polled all the people in this room, I'm not sure how many of you have recently transacted in Bitcoin. Actually, raise your hand if you've recently transacted in Bitcoin.
+Like, in the last, like, let's say month.
+Alright, we got one person who's transacted in Bitcoin in the last month, but the rest of us haven't, so I don't know if it's a very good medium of exchange. Store of value. I'm gonna say it's a decent store of value. The price seems to keep going up, so, you know, it is definitely retaining its value, if not increasing it.
+Standard of deferred payment, not a lot of people are denominating contracts in Bitcoin. There are some. So all of these things are kind of like, I don't know, it's got some of these functions, it doesn't have some of these other functions, but overall.
+it's not great, you know, on the unit of account, store of value, medium of exchange. It's not hitting, you know, even 2 out of 3 on that, but that could change.
+as an object with certain properties, well, I'm not going to go through all the properties again, but actually, I think Bitcoin does a really good job here. It does have a lot of these properties. It's scarce, there will only ever be 21 million, it's really easily divisible, it's portable, it's durable, like, Bitcoin kind of hits all of these things. Accessible, that might be an issue. It's not like you can go out there and pay for a lot of things in Bitcoin, but it's got a lot of those properties, which is pretty good.
+Is it a construction of the state? Absolutely not. That's kind of the point, though, the state has been embracing Bitcoin more and more, but it's definitely not something that the state said, we are issuing Bitcoin. The state does not issue Bitcoin. Now, is it a liability of
+an issuer. Interesting question.
+It's…
+It's a new type of entity. It's a liability of a protocol or a network. Now, it's not a liability that you can take to the network and say, give me something for this, right? But you can go to the network and transact in it.
+And…
+you know, it's… you can't take a dollar to the Federal Reserve and get anything back but a dollar either. So, you know, maybe this doesn't… maybe it is, maybe it's a new way of thinking about it?
+But I think the real…
+question here is, is applying these definitions to Bitcoin even useful?
+Do some of them make more sense than others? And also remember that these things might change over time.
+maybe more people will start accepting Bitcoin. Maybe it will start being used as a medium of exchange. So, maybe the question isn't, is Bitcoin money? Maybe the question is, could Bitcoin be money? Or, how money-like is Bitcoin, and how is that changing or evolving?
+Okay.
+So…
+That was the first part of this, which is, what is money, and why does money have value? Now we're gonna go into a little… a little bit more of this, and then I'm gonna turn it over to Ethan. So we're gonna talk a little bit about digital payments. So first.
+Money versus payments. So, again, in the economics literature, there's a ton of stuff on digital payments, and traditionally, they kind of see money as the object, and payments as the rails.
+Okay? So money is the object, and monetary theory is super important. How do we set interest rates? How much money should we issue? How do we keep the price of our currency up? And payments are like, oh yeah, payments, the rails. Sure, that happens on some technology, somewhere. Payments happen.
+They don't necessarily concern themselves too much with how payments actually happen.
+But I think what you're gonna see in this course is that the rails really matter.
+Digital money… and also, digital money is not really an object. We don't have digital objects that are scarce and, you know, that you can move around like physical objects. When you start to learn how cryptocurrencies actually work, I think you're going to question whether they're objects or not.
+And also, system properties, the properties of the system, really constrain the properties of the money. So, I think that we should absolutely think about
+the system in which money operates, and as money becomes more and more digital, that becomes a question of computer science, and cryptography, and distributed systems, and how do we construct the system, and how does it work? So that's what we're going to be learning.
+But just really quickly, I want to give you a mental model for traditional digital payments. So here's how traditional payments work.
+Let's say Alice is really hungry, she wants to buy a sandwich from Bob. In order to pay Bob digitally, she needs to go through some institution, like a credit card company, PayPal, Venmo.
+Or a bank.
+So she and Bob both have to have accounts, At this institution.
+And Alice needs to have enough in her account to pay Bob, and probably this institution is storing their account balances in a database on their servers, and it kind of looks like a ledger. Like, Alice has got $10, Bob has got $0.
+So, let's say Alice has enough money to buy a sandwich. She's gonna send a request to the bank.
+And that request is gonna say, I, Alice, would like to send Bob $5. Now, the bank needs to confirm that this is a valid request.
+And the bank needs to check and see, does Alice actually have enough money?
+in her account, and assuming that Alice does, the bank is gonna do this for Alice. The bank is gonna debit Alice's account $5 and credit Bob's account $5.
+And, presumably, it'll say okay to Alice, and then Alice is gonna tell Bob, Bob, I sent you $5. But how does Bob know that he's really been paid? Why should he trust Alice? Bob has to go and look. Bob's gotta go look at the bank.
+And Bob is gonna see that he has $5 more in his account than he did before.
+And so he's gonna say, okay, I've been paid, this bank is recording that I have $5,
+I am now going to give Alice her sandwich. Great!
+So.
+This is how payments work, and you can see it's not just like a one-and-done thing. There's a lot of messages going back and forth, there's a lot of checking of veracity of data, and Bob really, you know, can't give Alice a sandwich until he's been sure he's been paid. Also note, we're not solving the atomic swap problem here. Alice pays Bob before she gets her sandwich.
+You could… it could go the other way, Bob could give Alexis, like, at a restaurant, you get the food first, then you make the payment later. We're not, like, magically solving this atomic, problem, but this is roughly how it works, right?
+This is the payment protocol.
+So what are the pros and cons of having an institution like a bank in the middle? Well, the pros are that you get digital payments. This is awesome. You don't have to actually, you know, Alice doesn't have to give Bob cash. They don't have to be in the same place. The cons are that this is not peer-to-peer. The bank is in the middle of every transaction. Now, why is that bad?
+well, the bank could fail, or the bank could delay or censor transactions. And another reason this isn't really great is because
+This transaction is not just between Alice and Bob. The bank is seeing everything that's happening. They're seeing that Alice is paying Bob. They're seeing the amount. They're seeing the time.
+So let's quickly talk about what happens when a bank fails.
+So, yeah, the bank just might go offline, right? And so, Alice isn't able to make payments if the bank is offline. You just can't do it.
+The bank can delay or censor transactions. So, the bank could just say, no, I don't like Alice. Maybe her money, you know, maybe they've decided to freeze her money, or things just get delayed, or the bank has decided that Alice isn't really worth banking anymore.
+There's another optional reading, which is listed on the website, which is Senate congressional testimony from Aaron Klein at the Brookings Institute, where he talks about many more ways that banks might not always have their customers' best interests at heart. So maybe they don't just drop a payment, but maybe they say, Alice, I'm gonna charge you two bucks a month, just for the… just for you having this here. Or, you know, I'm gonna reorder your debits so that you… I can charge you overdraft fees, right?
+The bank has a lot of power in this situation.
+And so, where I'm gonna leave off now, and we're gonna switch over to Ethan, is this question of how might we get better digital payments? So Ethan's gonna talk about some alternatives to digital payments, like eCash, and we're gonna start to sort of step into the world of cryptocurrencies.
+Alright? Ready to go?
+zoomcart
+zoomcart
+00:41:33
+Hi, everyone. I think I'm gonna, give everyone a, 5-minute bridge, and then we'll get, started.
+There's been managing their revenue, and it hasn't been lost.
+I'll go out from the place.
+Basically, it's something.
+Oh yeah, that's fine.
+Can everyone on Zoom hear me?
+Let me share, my story.
+I appreciate the hard work.
+Beautiful.
+But it's where did you finish it.
+Awesome. Oh yeah, I can see it developed on the audio.
+So everybody passed.
+Did everybody get a chance to sign in on the signage sheets before?
+Awesome, good.
+Sorry.
+Excuse me.
+I mean, just in case anyone needs to know, I'm Ashley, I'm Program Manager with the DCI, so if anybody has any questions, feel free to let me know, you can reach out to me. I'm… I work with Ahar and the rest of the DCI team, and then… I'm Molly, I'm the Administrative Assistant at DCI, I'm also helping this course.
+Right.
+Awesome.
+Hi, everyone. Ethan Island,
+I'm gonna be, direct, guest… doing some guest lectures over the course. The pronouns are he, him.
+If you want to come back to me, this is, this is my email address, but for most class things, just send to the class list or Discord. My background is that I'm a cryptographer. I got a PhD from Boston University right across the, Charles. I'm curious where everyone here is from, in terms of, like, schools.
+Helping with my key students.
+Bu students, any BU students.
+Now, any, any Leslie students?
+Nice. Any, any higher issues?
+Awesome.
+So I, I, I really enjoy, cryptocurrencies. I've done research on cryptocurrencies and hack functions and network security for,
+more than a decade now. I'm really excited to be guest lecturing this, and also really excited to be guest lecturing the next lecture, which is on pack functions and signatures, which are things I also really, really enjoy. I'm also a contributor to Bitcoin Accord, and I've done work on the peer-to-peer network, and I have several, standards for Bitcoin, including
+adding a concatenation operator and, work on, quantum computer and, quantum computing protections in Bitcoin Core. So, I, I know Bitcoin Core, fairly well, or I know Bitcoin fairly well, and have worked on the software project since, 2015.
+So the general overview is we're gonna, start by looking at eCash, also known as Chomu Cash, which is a very early cryptocurrency that doesn't have some of the properties that we associate with modern cryptocurrencies. It's much more similar to the example that, MayHub used with the,
+I would argue it's a cryptocurrency, other people would disagree. I ran a poll on this a little while ago, and I think it was, like, 70% disagree with me on this.
+Then we're gonna see how we went from, eCash to where we are today by looking at, trust and trust minimization. And then finally, we're gonna get into some details on, Bitcoin to make, some of what I've talked about a little bit more concrete.
+And feel free to, interrupt me with questions if something's not clear. I was happy to go over a whiteboard or explain things, so if it doesn't make sense, just, shout out.
+So…
+What we're looking at here is, we're gonna look at, eCash, but we have the privacy aspect, and then we'll show how we add in the privacy aspect. So, as before, we have Alice and Bob. Alice wants to buy a sandwich from Bob, and Alice has 16, you know, dollars, or 16, monies, phones, at, at the bank.
+And bottle has 4.
+So, Alice, place a random serial number, and, send it to the bank.
+The bank, signs this random serial number and deducts one coin, one money from Alice's balance.
+Now this, CC is essentially a claim that it functions, because it's signed by the bank, that functions as, like, like one, one money, one coin.
+So when Alice wants to take Bob for the sandwich, she sends CC Nav, she sends the point of, redeems it at the bank.
+The bank checks the signature,
+And, increases, Bob's balance by 1.
+Now…
+what happens if Alice, say, takes CC… I should actually go back. Are there any questions on this?
+So what happens if Alice takes this CC'd from the bank and sends it to Carol as well as Bob, essentially double spends it? this is digital information, it's not like a piece of money that can only be in one place at one time. It's just a signature on a random number.
+Well, the bank, when it receives a coin, when it receives CC, it writes down the serial number, and then it ruins that serial number. So it says, I will never allow redemption of that serial number again.
+And so, when Carol goes to the bank that says, like, hey, is this coin good? The bank says, no, it's already good.
+And so Alice can't double spend the coin.
+But…
+there is a problem with what I see here. Notice that the serial number, the signed serial number that Ella stayed back for the bank is exactly the same as the one that Bob redeems. So.
+the bank knows that Alice submitted, this serial number. It debited her account.
+And it knows that it all redeemed the serial number, because it credited, his account. And so, in other words, it didn't tell us a problem.
+And really, what eCash was in terms of a, innovation, it was originally published in 1988, was how to actually do this in a private way.
+Because currently, this is not exactly how credit cards work, but, you know, your bank sees who you paid with a credit card, because it sees
+you know, your credit card number, regener from Virgin.
+So, eCash, the full protocol, has a fix for this.
+And the way this works.
+is that, Alice still creates a random serial number as before, but she blinds this serial number, essentially, like, hides it, to create a blinded serial number, and then sends this blinded serial number to the bank.
+But then it then signs this blinded serial number without learning what the actual serial number is. But it still knows it is talking to Alice, so it still deducts one from Alice's balance.
+And then Alice can unblind the signed, serial number, can unblind the coin, and generate a just regular coin that is her serial number signed by the bank.
+And then she can send this to Bob.
+In exchange for a sandwich, and then Bob can redeem this assigned serial number at the bank and have his balance increased by 1.
+And so, why can't Alice, like, cheat here, right? These are different values,
+So, the serial number, the signed by the bank. So the bank, knows that the bank hadn't have issued it, bless you. And the bank,
+also knows it can see the serial number here, so it also knows it's a serial number it hasn't seen before. So you can almost think of this as, like, the bank, gamed out a piece of paper, that had its, like, signature on it, and then when that came back, it's like, yep, it's my signature, so I know I gained it out, and now I destroy it, and I don't have to worry about,
+there being more than one of this.
+And note that this actually provides privacy, because the bank can't actually… the bank only saw the blinded serial number here, so the bank can't connect Alice… the issuance of the coin to Alice with Bob's redemption. It just sees,
+different values. It sees the blinded… blinded serial number, and then it sees the real serial number here.
+And we call this unlinkability.
+Which shows that each redemption and issuance are unlinkable to each other. But unlinkability as a privacy definition is not perfect. For example, if the only action that occurred.
+Like, if the bank had only ever only issued one coin, and it only means that one coin.
+there's no privacy, because it knows it gave one coin out and got one coin back, it must have been Alice's coin. Even if the bank does a bunch of these, but it's always very, like, short-term, bank issues coin, bank redeems coin, and they're all, like, in series, they're never overlapping, you also get no privacy, so…
+really what we want is Alice wants to get a bunch of coins.
+And a bunch of people get a bunch of coins, and then use those coins so that there's overlapping. So, unlimited building is really nice for privacy, but you need a crowd to hide in,
+And the, sort of, the distance in time from when you were issued the coin to when you redeemed it, is important for ensuring, privacy.
+So, I'm gonna, go a little bit deeper into how the blinding works, but does anybody have any questions about how this works, or something it seems like the bank should actually not be secure against, or, thinks Alice would cheat this?
+How does the bank know which account
+That is subtracting from? That's a really great question, and I don't have it in the slide, but implicit in this, Alice is authenticating that she is Alice to the bank, and Club is authenticating that he is brought to the bank.
+And so then it only knows that it's dealing with Alice or Kyle. And it's really important that this be part of the protocol, because if I could just pretend to be Alice, and, like, deduct a bunch of money from Alice's account and get a bunch of coins and buy stuff with it, it wouldn't be secure. So,
+We, we see this, like, this is, ident, but it's, like, private.
+like, Alice has a long-term identity with the bank, and the bank knows how much Alice's, like, you know, is… how many coins is issued to Alice. It doesn't know how many coins Alice redeemed.
+But it's not like these are completely anonymous. Like, the privacy is being built by breaking the link between issuance and redemption. And as we'll see later in this, class.
+There, there are obviously schemes that, achieve northliness, to achieve, different types of privacy, and this one's really almost kind of strange, because it's, like.
+Tuning with bank, tuning in with bank, but just breaking issuance and redemption gives you, gives you, a decent level of privacy.
+I don't know.
+Are there any questions on the chat?
+Not currently? Awesome.
+So we're gonna… we're gonna look a little bit deeper into how this, blinding works.
+So… Atlas generates this girl number.
+Alice generates this value B, which is the blinding factor, and then she has a function that takes B and the serial number and produces the blinded, blinded serial number. And you can kind of think of this as, like, a form of encryption.
+For people that are, more familiar with cryptography, in some settings, this actually provides information to write,
+a guarantee, also known as a perfect secrecy, where,
+Technically, there is a key for every serial number, so basically, if all we see is the blind serial number, even if you had an internally powerful computer, you wouldn't be able to reverse it. That's not actually,
+that important for the privacy properties, but you can think of blinding as, similar to encrypting the serial number under the key, B, which is the blinding factor.
+Then Alice sends the blinded serial number to the bank, and the bank uses its, sign-in key.
+SK, to sign it. And in most blunt signature schemes, the… this sign operation is, different than the typical,
+signing operation for that particular scheme. We're going to briefly look at RSA, and I'll point it out again in RSA, but, like, the RSA blind sign is actually a different functionality than the typical RSA sign.
+And then finally, Alice gets the signed, London signed serial number back, and she uses me to unbind it, essentially, similar to unencrypting it.
+So, how does this work? Well, if you have a signature algorithm that's this commutative that you can change the order of, you actually look at the serial number and the operations that occurred, we took the serial number, or we looked at a coin, CC, and you look at the operations that occurred.
+you, take the serial number, you blind it, then the next function you apply, it's to sign it, and then the next function you apply is to, unbind it. And,
+it's sort of weird that Unblind had removed the blinding through that signature. So what you, need to make this work, or generally the way in which this works, although there are schemes that do this, but one way to make this work.
+is that if, these are mathematical operations that allow you to reorder them through punitivity,
+You can actually swap.
+the sign and the unblind, and then blind and unblind cancel out, and you just have a signature on the serial number.
+And there is a really, really nice analog for this, in the world that doesn't use any math. It's, I don't know if anyone's, worked with it before, but there are envelopes that have, like, carbon, like, copy paper on it.
+And you can put a piece of paper inside the envelope, and seal the envelope, and have someone else do a signature on the outside of the envelope.
+And the signature will go through the envelope using the fucking copy.
+and will be, like, written on what's on the inside, but they never see what they signed. So if you wanted to build an analog version of this, it probably wouldn't be secure because there's a bunch of ways to look inside of envelopes, but for the sake of demonstration, you could have the… you could write your serial number down on the piece of paper, slip it in there, have the building signed outside of the envelope.
+And then when Alice unblinds, she opens the envelope, now has the bank's signature on the serial number, but the bank only saw the outside of the envelope.
+Yes? What's to stop Alice from, you know, she has 16 points or something, what's to stop Alice from saying, I have 17 points?
+And getting the bank to sign it.
+And validate those 17 points. So… So they can see the contents.
+So, each of these, and that's an excellent question, so the question is, if I understand it correctly, what is to prevent, Alice from claiming that she has a greater balance than she does, and getting a component that's worth, like, 17, money?
+So, eCash works where each coin is only worth one.
+And so each time Alice, requests an issuance, the bank knows it's only issuing one coin.
+object, chime in with cash? And this is actually a big problem for two reasons, and an excellent question, because, problem one.
+if you want to do… if you want this denominated in USD, like, the lowest amount is, like, cents. So, now you have to do, like, you know, if you're paying someone, like, $100, you have to do… what would that be, like…
+100,000, like, coins that then have to be sent over. So there's been a lot of, work on, how to do this in a way where you can issue, say, like, 100 coins at once.
+And there's some really cool, one way to do this, is essentially to use a chain of, hash functions, and I won't go into it here, but, people have been looking at these ideas for, like.
+I guess, 48 years now, they've come up with a bunch of different solutions. An even worse problem, and we called it in one of our papers, the potato problem, which is, let's say a potato costs, like, $7.01.
+And… and Alice wants to pay,
+Bob to buy the potato. And so she requests, $7.01 worth of, earnings, and then Bob redeems that amount. And it's like, well, I can see that you requested this value, and a very similar amount was there. And so there are ways to eat a win-ins
+capability by looking at the amounts. And so there has been,
+So there's a number of ways of addressing this, like, only issuing in certain lots of a certain amount, or,
+Bob can redeem, but in a way that doesn't reveal the value, and then Bob can, like, basically reveal the value of a one-team aggregate. But that's really, an excellent question, and, you know, with simple charging me cash, it's just one coin for, like, 1 cent or one dollar,
+Do web interventions?
+So, just to give you, like, the flavor of how this works, in, in, like, a real, signature algorithm, you don't have to understand how all of this works. The, counting ECAT paper,
+is, on the reading list. So if you, if you want a deep dive into it, I recommend reading that. But this is just designed to show you, sort of, the…
+methodical mechanism, for, how RSA blind signatures, which is what Chami Mikach was designed around, works.
+So in, and this is, like, a very high-level version of RSA. So in RSA blind signatures, your own key is this exponent E, and you have a modulus n, and your secret key is this value D,
+they're assigning fields as WD. You don't have to,
+The important thing to recognize is that when you want to sign something, or when you want to sign something, you raise it to the power E mod N, and that's your signature, and when you want to, verify that something has been signed, you raise it to the power E,
+And E and D are inverses, so they cancel each other out. So if you sign something, and then you, do the verify operation, you get at the original thing, and you keep… and the signer keeps D secret.
+So the way this works is just, just as before, random serial number, random blinding factor, and then the blind operation is that allocates the blinding factor, rises it to the power E,
+And multiplies it times the serial number.
+And the reason she brings it into the power E is that what she really wants, is she really wants, like, she really wants D
+times B to the… to the V, because that's what the signature would be on the, on the bond, but she knows that it's going to be multiplied times D, so she needs to… it can't… she needs, like, she needs to make…
+That's the right way of putting this. She needs… she wants, she wants this.
+And since the entire thing is going to be written to the PRD, she needs to put that exponent on feet.
+So, when the bank signs, the bank raises the blinded serial number to the power D, and ends up with
+the serial number to the power D, which is a signature on the serial number, times a random number. And because this times a random number, and the bank doesn't know what that random number is, the bank can't actually see what the serial number is.
+Does that make sense to everyone?
+But the basic idea is just that if you have a value, and you multiply it times a random number,
+you don't really know what that value is. You need to…
+know what that value is, and then divide by B to get the signature. So that's what Alice does. What the unblind operation is, is that she simply just divides by B mod N,
+And, because it's serial number to the D, which is the, is the signature on the serial number, it's just the value raised to D, divided by B, the E's cancel out, and you get serial number raised to the D, which is the signature.
+Any questions on this? You don't have to know, you don't have to know exactly how this works, but the idea is just, because you can reorder the operations, because it's just multiplication and, division, and exponentation, you can pull the V off after the signature is secured.
+There's actually one thing that I've been hiding from you.
+And it's not actually the serial number that you sign, it's the hash of the serial number.
+This isn't super important, but if you don't… if you… if you actually just let Alice specify the serial number, she may not choose it randomly, she may choose it to perform, an attachment at all bullet points.
+So, to guarantee that the serial number is random, you have to use a hack function. I just pointed this out for complete mistake. If people want to think about why this isn't secure, feel free to do so. There's a fun attack here if you don't actually hash these values. And we'll discuss hack functions in more detail, both in this lecture and the next lecture.
+So what happened with eCash? It's really, really big, everyone's always moving the future. loved it. When they were launching Windows 95, he wanted to put, he wanted to use…
+DigiCash, which was David Chan's company, to make, eCash a reality, had dreams with a large number of banks.
+I believe it had an agreement with, like, Visa, and Williams looked at this and was like, it's great, it's private, we need to figure out how to pay for things on the internet, because this was back, you know, in the early 90s. People kind of used credit cards, but it wasn't super reliable. So it's like, eCash is wonderful, we should just use this for e-commerce. And so we wanted to, like, bake it in to, Windows 95, you would just
+link your eCash account to your Windows 75, and then you go on merchants and buy things and use it. And it came really close to happening, and they couldn't agree on negotiation terms.
+Microsoft wanted to pay $100 million for the intellectual rights to use eCatch. David Chum asked for $2 for each version of Windows 95. They didn't come to an agreement, so it didn't happen. So Windows ended up using, like, credit cards, and online merchants ended up using credit cards as a stockbat until we could get a better form of digital payment.
+And we've been stuck with it since… what is it? That's…
+10 takes you to… 30 years, 33 decades!
+if we had gotten moved on to follow a completely different world, far… potentially far more private,
+Maybe not.
+We do really good at micro-rep actions, maybe they go to Windows 95, and no one actually links their bank accounts to it. But we came really, really close to seeing this widespread, and it is a good system that can be, like, widely deployed. So, I remember a long time ago, when folks learned about eCaph,
+It's like, why… like, why doesn't someone just launch a new cash bank, right? It's, like, really cool, just, like, set it up online, no one has to know who you are. I looked around online, this was, like.
+So, 2009, 2010, and, there were eCap banks on, like, internet chats on the IRC, and I was like, oh, that's really, really cool! Like, I'm gonna, like, use these on, like, a privacy, I'm, like, a cyber fund, and I looked into it, and it was, like, all the eCash, anonymous ECAC banks I could find had, like, 17 cents, 23 cents, none of them wasn't a dollar, actually, like, in the reserves, and I was like, what's going on with this?
+And it turns out, the problem is trust. If you run an anonymous ECACH bank, and you're some random person on the internet, almost all of the anonymous ECAC banks, when someone had a child with more than, like, $1, would just run a poll, and just take the $1,
+And so, if you've been into the bank that's just run by a trainer on the internet, the fact that eCash,
+It gets you really good privacy.
+makes it really hard to bootstrap unless you're, like, MasterCard and Microsoft or a, you know, large bank that everyone trusts. You know, but if a, if a,
+If the central bank issued e-cash, it's like, okay, if the central bank rifles me, the whole country is, disastrous anyways, so, you know, you're willing to trust it, but you're not willing to trust some other person on the internet.
+So, we're gonna look at how, things evolved from this idea of ECAC, where there's a lot of trust in the bank, but you get decent privacy, to, where we are now with cryptocurrencies and Bitcoin,
+And I want to, like, define some terms, and these terms are how I think of these things, and other people will disagree with them, you know, words are better for numerous, and we ascribe value to them and concepts to them. So this is how I think about, trust and cryptography.
+So trust in computer science is actually, like, a dirty word. It means something bad.
+You know, a trusted party is a party that must be trusted, to be honest. If they get attackers behave, the system is no longer secure. So it's sort of like the way that you, you know, say that iron is, like, so strong on a bridge.
+and it turns out not to be that strong, the bridge falls down. It's not the same as, like, trustworthiness, in that it's, like.
+we have to trust it, because we built the system a particular way, but if you could build bridges that didn't depend on the strength of iron, that were just as good as iron bridges, you would… you would use that, right?
+So, people say trust but verify. The real question, though, is, like, how to verify. And I would argue that cryptography as, like, a long-term
+maybe, like, 10,000-year human project is answering that second part of that, how to verify. And not everyone will disagree, someone was actually telling me that they didn't like this definition of cryptography. So this is my definition, this is how I think about it. Cryptography is the science of minimizing trust.
+In the, in the same way that, like, when we engineer a bridge, we, we want there to be…
+We wanted to be able to survive as many failures as possible. And trust is a, is a assumption that something won't fail, which means that if it does fail, bad things will happen.
+So everyone, any questions on this? Any questions on the shed? Nope. Awesome.
+But please, please ask questions. So, let's think about, trust. Let's say you want to send a confidential message. What bad things can the messenger do?
+Well, the messenger can read the message and share it with others.
+The message… the messenger could alter the message, and say something else,
+If anyone's seen Hamlet, Hamlet, changes the message such that the error of the message is, is executed, Rosenstans and Gildenstern, deliver the message to the K of England that says, kill Rosenstench and Goldenstern. so, you know, message integrity is also important. You don't want people to be able to change it. And you want the message to show up. What is the message you're just like.
+It springs it off to, you know, bag of horse never arrives.
+So, you could trust the messenger, fine, who can you trust via the messenger, but maybe the messenger has a bad day. Maybe something goes wrong, maybe someone steals their bag, right? Just because the messenger is honest to you doesn't mean that bad things can't happen. Or you can design a protocol not to have to trust the messenger.
+So, using cryptography, we can encrypt the message so no one can read it, except the recipient.
+We can sign the message so it can't be altered,
+And we can send multiple messengers, so that only one of them has to succeed, for, for the message to get delivered. And in some sense, the more messengers you have, the more chance they could violate confidentiality, or integrity. So, fixing these first
+makes it more likely that you would send it with multiple messages. Additionally, you could just have, get a message back, and then be like, well, okay, if I don't receive a message back, I resend the message. Which is largely how the internet works.
+So, we're gonna use this framework of trust and trust minimization to sort of build up from, eCash to, a system like Wickfind.
+And just sort of thinking about, like, what a cryptocurrency is, when we've been thinking about how you build a cryptocurrency. I would argue that if cryptography is the science of minimizing trust, then a cryptocurrency is a currency which has been trust minimalized by cryptography.
+If you look at this, room generis,
+Good Arts. you know, it says, trust the army, or essentially, like, the army of loyal.
+Which was an important thing to put on the coins, you know, during the Civil War period of where you really want your permittee to be issued by someone that actually has the army dots behind them.
+And if you look at this fake note of Bitcoin from about, 2011 AD, it says, you know, essentially strength in numbers. I've been told by classicists that that, various is not entirely the, like, there's some nuance there, it has nuances of realty, but the intention was strength in numbers.
+So, sort of from, like, trust the state to, trust mathematics.
+So, referring to our ECAP example, let's just think about the things that can, that can go wrong. And I also want to note, talk a virtual question, curious as a show of hands,
+Is eCash the first cryptocurrency? People online tell me, tell me, tell me no, but, I'm curious, like, as a poll, would you, would you say eCash is the first cryptocurrency, or would you say eCash is a cryptocurrency at all?
+No, no ass.
+Yes, it is.
+Alright, so, paper, yes, everyone else upstanding.
+I think it is, because it's minimizing trust in the banking for privacy, which, if it had succeeded, we would have roughly the same system we have today, but rather than PayPal seeing everything,
+I wouldn't see everything. In the interesting way, I was,
+came out of this sort of e-cash world, when everyone thought we were gonna build e-cash banks, and Lewis did.
+Alright, so think about all the bad stuff Nikka can do. It can just issue coins, and it doesn't have to…
+deduct people's balances. it can just change balances. It can just be like, you have $0 now, sorry.
+how do you even know who, who, who takes out their checkbook and, like, writes all the, the, the, you know, I pay this person this much money? Maybe it's not your malicious, and he just has a bug, right? Like, it just occasionally zeroes out all someone's money. I mean, the bad thing is it can disappear offline, and it's just, like, unrecoverable. Like…
+All of the balances are gone, and you can't even, like, move to a different bank, it's just bought home.
+And it can also allow double spending, so before, we showed how it prevents double spending, and generally, it is the one who is cheated if it allows double spending, but if it has an above, and allows double spending, and then someone, like.
+spend… buys a bunch of stuff, and it goes out of business, that hurts everyone.
+Can anybody else have any other ideas on things the PK Defender can do?
+service fee?
+What was that? Like, the service being a bit generous when we, like, transact the volume.
+So, like, the service fee? Service fee. Yeah, so it can charge, it can charge, it can charge, teams, lots and lots of fees, which we currently have a problem with, banks, as, as Neha, Neha discussed. Yeah.
+So, let's just develop privacy for a second, and say, okay.
+Can we solve these, these three problems? We have a public bulletin board, and the public bulletin board is this thing that providers talk about, but it doesn't really exist, but there are ways of getting things, close to it. Essentially, it means that you have, like, a…
+Tim Board did.
+anyone can post information to, and everyone can look at, and everyone sees the same bulletin board. It's sort of, it's like, consensus over the same data set, so someone's shown one bulletin board and someone else sees a different bulletin board.
+And they're going to building things that are good enough for the purposes of cryptocurrency. But let's say we have one of these.
+You no longer have privacy. So, these are allouses, these are the certain balances of the people that will be transacting. This is the bank, this dotted line here is the walking bar.
+And Alex says, hey, hey, Bob! Hey, Bob, 5. $5, 5 Bitcoin, 5E cash, 5 coins. And, the bank posts a transaction that shows Alex paid off, 5.
+And, Bob can say, I think, Arl, too.
+And the bank, posts a transaction going above PayPal 2 points.
+And then, everyone can sort of compute the new balance. Alice lost, lost 5 of those. Bought a lot of, bought a, gave him 5 coins, but then spent 2 coins to, 2 cattle.
+Does this make sense to everyone?
+And everyone can kind of, like, look at this and be like, okay, well, if these are signed by the bank, they can look in the public bulletin board and be like, okay, the bank approves this transaction.
+Why should I have 7 o'clock.
+5, 2. So, botched up to 9, you're correct. See, this is why we need cryptocurrency, so that, we don't make, we don't, we don't make mistakes. This is why we have computers.
+Thanks.
+So bad things that that can still do.
+It can create 3 transactions, right? Alex just says PayPal this, similar to the way that you go to PayPal, and they're like, send this person money. But PayPal could, if they wanted to, just send money to someone from your account, credit you for that. It can show inconsistent states,
+In the sense that it can, you know, we have the bulletin board, we're sort of trusting that it is, purchasing these things in…
+in one particular order, and not, like, reordering them. It can go offline forever, so no one can be transact.
+Product is actually not as bad as the previous one. Because we have this public bulletin board, we can look at it, and we can say, okay, well, the bank went away, but we all agree on what the balances are, because they've all been posted to the bulletin board. So we can… we'll find another bank. Someone else will set up another bank, and maybe, you know,
+Maybe this will be an intentest decision, but still, it's not like everything's gone. The information's still there. And the bank can also censor transactions. It can, as they discussed earlier, it can say, like.
+you know, I'm not gonna pay Bob, or, I won't accept a transaction as from Alice.
+Alright.
+So what if, instead of just having Alice say, hey, Bob, 5, 5, 5 points, Alice also signed it, and,
+Her total key was, like, known to all, all, all parties.
+I wanted to ask Dr. Pepper to get back on the same page. So, when you say, like, there's a million transactions that are being kind of posted on it, is it kind of like Venmo, where you would, like.
+goes to your… this person paid that person, like, publicly? Or is it more like an internal record that can be accessed by someone if needed?
+So I think for the purposes of this, example, it's one more, like, Venmo, or, like, like, if you were to do this in analog, and you, like, actually had a bulletin board, and the page has, like, like,
+one of those, like, notary, notary, things for paper, people could post things to the bulletin board, and the bank would be like, I'm posting this transaction, and putting it there where it couldn't be removed, and then, like, notarize it, and everyone could see that that transaction was put there, and they couldn't, like, tear it down later. So, like, very public.
+So, if we, if we have the, various parties, sign these, rather than have, like, the bank notarize or sign them,
+We can,
+We can prevent the bank, from doing, like, unauthorized transactions, because everyone will look, and, they can compute
+they can learn to compute the balances themselves, because they can see, you know, Alex did this, and the bank, in fact, to click the transaction, they'll be like, that's not a real transaction.
+So, if we have signatures, we can remove a little… we can remove a little bit more dust from the bank.
+Any questions on this?
+Duplicate transactions. Would that still be, like, duplicating A to B5, just kind of copy and pasting it?
+So, like, if I understand your question, like, what if, someone installed this on the bulletin board, and then, just, copied it to the digital bulletin board, reposted it? Yeah, it was like…
+So it's a really, really, really excellent question, and this is something that, cryptocurrencies have to contend with. And I didn't actually, in this protocol, in this slide, show how it works. But there's two ways to solve it.
+Is this the whiteboard you're using?
+So the way Bitcoin solves it is that, you have, like, you know, like, Alice…
+And it has 15, and then I was supposed to transacting.
+She spins this thing, which is called an output.
+And she produces a new output, which is, what would that be? That would be,
+Started with 16. She spends a new output, which creates, 5 to 5.
+And then she returns Eleven back herself.
+And so, if you… if you duplicate this, you'll have two transactions pointing to the same output, and once an output is spent, it is,
+It is, no longer, it can't be, like, spent twice.
+there are other systems that, like, Ethereum, that don't use, accounts in this way, but do record, like, only allow the transaction to be posted once.
+But really excellent question, because it's going to come up in the next slide, or the next, next two slides.
+So yes, you need some way of preventing, you need to keep them into a niche, so that, I mean, you can't just copy them.
+So, do we stay with the bank? What if we just got rid of the bank here?
+Well, the bank is actually, solving exactly the problem you brought up, which is, or actually an even worse problem. Because we could just say, ignore, ignore non-reviewed payments. Each one is quite the same as what's on the bulletin board, just counts as one.
+But what if Alice were to produce two transactions that are both under, her starting balance amount, but together more than her balance?
+One of these, should be rejected, and it depends on the order. If you do this one, if you do this one the first.
+this one becomes rejected, and if you do this one first, this one becomes rejected. And the thing that the bank was doing here was, like, wondering, was deciding this order. But when we looked at the holding board, we not knew which one came first.
+You can put timestamps in these, but if Alice is the party that's misbehaving, Alice would, you know, put the same timestamp, or do a bunch of, a bunch of things to hide, which one was worse.
+So you need something to sort of, order these.
+So we don't want to reject
+So, to fully replace the bank, you know, one more, one more component.
+Does that make sense? What is… corrections.
+Any questions from the chat? No. Chat's very quiet.
+So one way, and this is sort of the traditional way that people thought about this before QuickLine.
+And so you just have, like.
+three parties. Essentially, you could have, like, three banks.
+And they all, they all come together, and they agree on the order in which things happened. this is essentially, like, a distributed systems, approach, and we'll talk about this more in, later lectures. But…
+like, this works. You have, you have 3 people, you have 3 systems, 3 banks, 3 computers,
+They all pass messages, then when they agree, they all sign. If one of them is potentially evil, you have them, like, vote by majority vote. And then depending on your security assumptions.
+Maybe you can survive one of them being evil, or, some percentage of them being evil, the way consensus breaks down.
+But… This is, this is nice.
+But it kind of has the problem of the bank, like, we made it… we've made it better.
+Because now we can survive, like, maybe one of them going offline, or some fraction of them going offline. But you still have the problem of what if they all go offline, or they all become malicious, or, like, then the protocol can handle become malicious.
+So another idea, is like, hey, why not every participant, every person that's, doing this, you all just have them vote on order. You run a big protocol, and you all vote on it. But…
+The really, like, this is actually, like, a really good idea, but the reason it kept sort of, like, failing, and we did not see, things like this work, is because
+Why don't I just pretend to be a thousand people, and now a malicious person can be a thousand malicious.
+parties, right? It's like, one identity, one vote, and anybody can join the system, I just make, you know, more attendees than there are people on the Earth, and outvote everyone else. And so this was really the reason why these,
+This would be called, like, a permission system, and this would be called a, like, non-permission system. The consensus said it's non-permissioned, anyone can join. This is really why, like, people thought of this as inaccessible until the Bitcoin white paper came out.
+And we've come up with at least two solutions. One of them is proof of work. So the way in which you vote is you do a bunch of work, you do a bunch of computational work, and that gives you one vote. So you can't just
+create, you know, a billion votes without having to do a billion puzzles. And the boss one needs to do the puzzles. And the second one is a proof of stake. So you can have, like, each party gets one vote
+For each, like, dollar they have, and if they… into the system, so, like, you know, starting with balances, Alice can say, I'm going to lock 10 of my coins for the next year, and, now I can vote on things, as if there are 10 of me.
+And this, you also can't, can't really let fake, because, the system agrees on everyone's, everyone's money. And this is, somewhat hard to build, but, we now have articles like Ethereum that function on this, and there will be a whole lecture on this.
+So, to prevent the ballot stuff, again, not these ways.
+Like, to prevent the… yeah, to prevent the civil attacks, you need some sort of, like, identity, but, like, an honest identity for every person.
+Yeah, so there's, so one idea, if I understood your question, is, like, could you prevent, sort of, these civil attacks by,
+using a true identity, like your passport or something, to participate in the protocol. Yeah, anonymous. We do have ways of taking a passport and turning it into a credential you can sign with in a way that…
+is, is, is anonymous. And there have been proposals on this.
+But it's really hard to do, because it's like, okay, well, like, not everyone has identity documents, the identity system wasn't really designed for, like, attacks when you could steal billions of dollars, with this. So, like, if you had a really strong identity system,
+and everyone had an identity card, then you could
+build things like this. But you could do something where, like, you have a… you, like, register yourself as a company, and you are allowed to join the consensus set after, like, they investigate your company and make sure there's nothing malicious happening, and, you know, you think about it.
+like, Gmail or something. We trust Gmail. Gmail can do a lot of really bad stuff to us, but it's got… we've kind of…
+we know that Gmail isn't just, like, faking the existence of Gmail, but you know it's a real thing. So I think it can… I think… I think that can work, but it's tricky to implement, and it's tricky to implement at the individual level, but I think it's easier to be able to implement at the organizational level.
+And there are definitely, blockchains that funk in this way. We have a question on chat. Oh, nice, yeah. So, for proof of stake, how do you prevent inflation of stake to avoid voting imbalance?
+Alright, so that's… there's a couple different ways to, I can understand that question, so I'm gonna, break it into the parts that, so really one is,
+If you… if, by voting, you can increase the number of coins in supply, like, that's a thing that can be voted on.
+Conceivably, some of them would, like, build themselves more and more coins. Until they have so many coins, it looks like they can build a cryptocurrency. generally, for that, for some things.
+it's not controlled by, like, voting or consensus. For example, like, signature verification. Even if all the miners, or even if all the parties that are here, even if all three of these are malicious, they can't fake Alice's signature. So, like, if they try to move Alice's money.
+it'll… it'll fail. They can prevent Alice from transacting. They can reorder transactions maliciously, but they can't create contactments as Alice. So a lot of cryptocurrencies
+have a fixed supply, and so it doesn't matter how you vote on consensus, you cannot, increase that fixed supply. Bitcoin has, like, 21 million.
+The second way of understanding that question is that a lot of proof-of-stake algorithms
+reward people for staking their money and engaging in consensus, because it's actually very expensive to do. So the large number of transactions you have to check, and if it turns out that you approved something that is… that you shouldn't have approved, you get, slashed and you lose your stake. So, for a lot of those, they actually, like.
+pre-group earnings that are granted to the stakers.
+Which means what the question is about. typically in those, the inflation is also, like, fixed by the political, not by consensus. But there is a problem where the stakers
+get more money, and the people that own state get less money. And so you have these sort of, like, two classes of people dealing with inflation and people getting the proceeds from inflation.
+And, that can… there's some interesting incentive things that I won't get into, because it's pretty complicated, and I will save that from state collector. But if that is the question, that would be my… my answer to the other way.
+So, that brought up an interesting point. So, when you say be malicious here, you can't be malicious in any way. Like, you can under bees.
+So, when you say malicious there, it's just going offline, or voting order wrong? So there's a couple of different ways you can be malicious. One way is, you're being custody to reorder transactions, but one of the…
+This, this party here says, I think Alex paid Bob first, and the Alex the Harold transaction came later.
+and then tells this party that, I think the Alice to Carol transaction happened first. And so you could, equivocate, like, present, essentially, like, write consensus. You could also, since you're, like, agreeing on updates to the state, you could, like, go backwards in time and then create a different set of updates that are all valid signatures.
+But,
+You may also have… you almost definitely have money in the cryptocurrency, so you could, like.
+buy a card, and then later be like, actually, we're all in a rewrite state, so that transaction didn't happen, now I'm gonna reorder it so another transaction did happen that pays it back to me. So the maliciousness is very much in ordering and controlling history, but not in moving other people's… other people's funds.
+There are some caveats to that, in certain types of, verification in wallets, but I think for, for most purposes, that is, that is the case.
+Oh, Let me just double-check what time this…
+So, Bitcoin, made an enormous, change, by saying, hey, like,
+What if, what if people can vote with their CPU? So, CPUs are rare, one CPU, one vote, solves these puzzles, and, you can decide, what the coins are. And I think that there's two reasons that this succeeded. reason one is that, like, people sort of had this proof-of-work idea, for a while. He used it from this earlier example, like.
+PackDash that was, designed to prevent email spam by doing puzzles per email. put…
+I think that, the really surprising thing here is that one CPU per vote works when the room is on the line, because you would think
+Why not just get a bunch of CPUs and do something malicious?
+And with Bitcoin, you only need 50% of the, the computing power. So, like, especially in the cloud gates, it shouldn't be that hard to rustle out, like, a bunch of computers and, bubble spend and reorder transactions and, steal money that way.
+And…
+I can't speak for anyone, I can only speak for myself, but I am extremely surprised that this has, worked as well as it has.
+And we have seen in some other cryptocurrencies, and a little bit in Bitcoin, of people breaking this assumption, by doing things like 51% with hacks. But it's actually really rare
+And I almost think it's, it's like one of these things that this was, this paper probably rejected, and then had been used. People have been like, that's, like, a kind of strange to make.
+Well, now that we've, like, seen it in the practice, we, like, know it works. Like, it's really about this idea, and it's just really interesting that, like, Satoshi believed in this enough to, like, make it happen, and then because it happened, we're like, oh, this actually works.
+But the essential ideas, like, you know, one, compute, one probe.
+Sorry, I just got a question. Like, so basically, if you want to be able to, like, at least one percent attack, how much code do you need to change to do that? Is it, like, very simple, or you need to, like, fundamentally try to work as something, like, wrongly, intentionally? I think there's another sort of a menu is, like, how much code do you do?
+So,
+Seems like there's two questions. One is, how important do you need to do to attack the system? Yeah. And the second one is, like,
+what are people likely to do with 51% attacks? And so, in the early days, there was,
+I think there was a theory where, like, There was a…
+and I forget, one of the books talks about this, but basically, like, since Yoshini…
+someone entered the network with, like, 100 computers. It was, like, more Bitcoin analysts than had, like, previously existed, and the general assumption was that Satochi was testing what 51% attack would look like, with, like, just, like, 100 cheap machines, relatively virtual machines. So the early days.
+probably trivial to attack the network. You can just spin up a bunch of stuff on AWS and break it. So we're helping my new code, you just find broadcast new stuff. It's kind of that. And so, well, so the attack…
+But one attack could be, you just… you don't even… you go back in time, you produce a chain, and you just erase all history, and maybe you take a short position on their quantity.
+you buy something expensive, like a car, and then you rewrite history to double spend. 5, 10 extra lines of bash code, and then it's kind of crazy, though. Yeah, yeah, I mean, it's pretty easy to do from a photo perspective.
+Interestingly one of the 50…
+not quite 51% attacks, but mining attacks that we saw on Bitcoin was someone,
+There used to be, like, a gamut website, and they approved,
+they would, like, let you gamble, but they wouldn't actually wait for your content to have approved your content, they would just assume that it would eventually happen. And so people were, like, gambling, and then when they would win, they would, not, do it, but when they would lose, they would try to be able to spend and give them, like, a slight edge over the casino. Got it.
+Okay, the attack would look like, I guess, what would it look like when it fails? Or when it is being attacked? You'll just see a different history.
+Yeah, so that's a really great question. Here's some later slides, but let's dive into it. Can I use this whiteboard, or is this the only…
+So…
+We haven't discussed this yet, but, like, the way Bitcoin and a lot of cryptocurrencies work is that there is a, chain of blocks called a blockchain, and there is proof of work done on each one of these.
+And the person who does the proof of work, like, puts all the transactions in here that they wish to approve, and then attempts to sauce with those transactions.
+So, what you could do is you could,
+If you have, like, a fork like this,
+And this is a planner to the previous, to the previous block. Bitcoin's rule is that, sort of, the longest chain works, because it has the most crucial work. And then here is calculating,
+of wheat, rather than life, because sometimes you can solve a puzzle a little bit better than another puzzle. There are some nuances to that, so if there are other purposes of our conversation, it's just, like, longest chain, because it has the most work on it. So what would happen is if you had this chain.
+it would, this would become the consensus. And so, you do a transaction where you, like,
+And then you, actually, like, send the money back yourself.
+And then you… you put this, you do a bunch of proof of work here, and now you have no water. Or the… you still buy the cup, but the person's transaction has been undone. What transaction to them has been undone.
+But you can… you can also… there are links, to…
+blockchains where you just, by breaking them, make money, if you take a short position. and this was called, the Goldsfinger bag from the, Gabe Swan movie, where, Goldsfinger, idea is to.
+create all the gold in Fort Knox and destroy Fort Knox, and then he has, like, bought a bunch of gold, so now gold will become more scarce. So there are ways to just…
+Misbehaving, or it doesn't seem like you have any incentive, but your incentive is just disruption to make something else more valuable.
+Nope.
+Alright, so…
+This is a… this is a sort of practical analog to, proof of work. Imagine you take, like, 25, film circles, and you ran, numbers on them, from, like, 1 to 256,
+And then you put them in the jar, you shake them up, and you dump them on the table.
+And then you, lay them out in the order of the number that you wrote on them.
+And then below, like, was coin number 1 hits? Was coin number 2 tails or heads? Was coin number 3 tails or heads? And you could write down, like, heads for the first coin, tails, tails, heads for the second coin, and so on.
+And we can talk about, a particular, like, emptying of the jar as having a weight, based on the number of
+heads that start, from, like, 1 and going up. So this, this, this, these 256 coins, they start with tails, so it has a weight of 0.
+But this one starts with heads, so it has a weight of 1, because the next one is tails, and so it only has one head in a row. And this one has, 4 heads in a row before it hits a tails, and so it has a weight of four. So you can, so this is, like, essentially, like, a physical analog of proof of work. You're just repeating this process in tools through luck.
+You get a, You get a, like, high weight
+So let's say you wanted to get, like, a weight of 58,
+Which I calculated a while ago, based on Bitcoin mining, it probably is, higher now.
+So how many times would you have to repeat this process to get a weight of 58? Well, probability first coin is heads, probability second coin is, is tails, they're both 1 half. So basically, for each additional head, the probability of it happening goes down by 1 half.
+So for,
+A sequence starting with, 58 heads, you would need, 288,000 trillion, runs of this to get, to get, 58 heads at the beginning.
+Boom.
+And so what Bitcoin is essentially doing is, doing this clone-slipping, but in a deterministic, verifiable way. So you have some input, you hack it to get some output,
+And, what you care about is, like, the, how low the number is. So the more zero is in front of your heck output, the lower the number is.
+And just briefly, we'll learn about some hash functions in the, next lecture, next week. But basically, a hash function, you take an entire, you take some, string, essentially, of, movement lights.
+Of any length, so it could be, like, a single character, it could be, like, an entire book. And you produce, a fixed length output. So, in this case, it's a 256-bit output, but it may not be 256-bit,
+output is random input deterministic. So if you put the same input, you get the same output, but each bit of the output will be, essentially, uniformly random.
+So, you can do the swing flipping with this, but instead, what you do is, let's say you want to approve these two transactions.
+You, put them as the input to your hack function. You also put in the, the hack of the previous block, so this produces an order of updates. And then choose a random number, just so you don't have to move the transactions around.
+And then you run this, and then you see if you get a sufficient number of zeros out in front, and if you don't,
+Then you just try again. And you can do this in the parallel, like, at massive scale, and, get… and basically, like, prove that, on average, you have done an enormous amount of work to find such a value. And then when you find it, you, publish the transactions, the block, and everyone can catch the block and check that it has certificate.
+And we discussed, staking, earlier, and there will be a lecture on staking. Alright. So, let's look at what we've, we've done so far.
+There's the trust assumption to not put currency supply all the way back at the beginning, and by having Republican vote to the board, everyone can see.
+the amount of claims there are, and where they've moved to, and that the supply hasn't been inflated. Or the fact that it has and rejects the inflationary actions. with signatures, we can create transactions honestly. This does not depend on consensus.
+Or the, you know, items and proof of order. Digital signatures just syndicate things,
+Without, without caring about any of that. from that to ordering and consensus, we can… we have proof of work, proof of stake, we can do permission systems where there is a, select set. This problem of, like, don't go off… offline forever, if anyone can be a minor, if anyone can participate in consensus by just putting money up front or buying a bunch of,
+like, computer chips in the run with them, then if someone, like, if a bunch of miners go offline, a bunch of new miners can come back online, so it makes it much more flexible. You don't have to be like, okay, this computer or this company can never go out of business, or the entire, all of the value's lost.
+don't censor transactions,
+The fact that the people that are participating in this consensus can join and leave, and there's a large number of them, makes censoring really hard. Particularly, I'm not going to approve the transactions, from this particular address.
+But then, the miner that mines another block will accrues them, or may accrues them. It's really hard to get ahead of the miners when they're decentralized, conceivably, in some cases, anonymous, to open the buyer to prevent someone from sending transactions. And if you…
+Can't do that, whether any particular miner sends their transaction, since they won't really get the effect they want off.
+And then finally, privacy. We've kind of, in this discussion so far, we've sat everybody's privacy to get all of these other systems, there are all of these other problems.
+to get all of these other, custom reductions.
+So, there's been a lot of approaches to adding privacy, back in,
+Zcash does a really good job using zero-knowledge proofs. Interestingly, it doesn't zero-knowledge proof that you're not inflating the currency supply, but,
+One thing that scares people is that
+it's much, like, if there's a bug in that proof, you can inflate.
+And if you just publish everything on a bulletin board, not worry about privacy, you can, like, really see how many coins are out there. And Bitcoin did have an inflation bug, a long time ago, and people noticed it within 2 hours when someone started inflating. Essentially, it was an overflow of a few…
+if you, like, spend too much money, it would, like, wrap around to a negative, negative amount, and then you could, like, cancel the things out and produce… someone produced 2 billion Bitcoin in a single transaction, and then, the network had to, like, roll back and patch that. some approaches, like HubbleBit, actually use, like, r saved line signatures, taking us all the way back to Ecache.
+Why didn't Bitcoin… why didn't Bitcoin decline signatures?
+What, didn't pick one used point signatures? I just forgot.
+So…
+So that's a really interesting question, and I looked into it a little bit, and I have seen… I believe there's a Bitcoin pop post where Cesaroji discusses the existence of blind signatures. So they were aware of it. It's probably,
+there are probably three things at work. One, RSA signatures, which it doesn't have to be RSA signatures, but RSA signatures were the main one signature scheme of the, like, there hadn't a lot of work done at the time, are, like, four-player lights.
+And turn your equivalent signatures are, with…
+Yeah, 200, like, 250 cents,
+let me see… I think 336 kilobytes of, 4,096 bits, so 4 kilobytes,
+so much larger than, Olympic curve signatures. There are… there were Olympic curve black signature schemes, but they had some assumptions, and there was, like, less work at the time. I think also it's, like.
+There's no… there's no, like, anything Bitcoin. So, like, you can do something where you, like.
+pay in, and everyone gets unsignatures out. But, like, you don't actually need to put it in the book wall.
+So one of the things that ended up getting built, which is kind of how Humboldt works, but, Wasabi Wallet, which built on Humboldt, and it was actually hardware to
+to talk a little bit, was, that you just construct a really large transaction, with a bunch of different people, called a coin. And you use blind signatures to prove that you contributed to the transaction? I think… I think Greg Mackwell, discusses this, something quite hot in the early days. So I suspect it's,
+Ultimately, what you'd want to do is, coin, and you don't actually even need,
+you don't need to build a new currency by choice. Like, you could choose to do this, or you could choose to use it. Yeah, yeah, I think building it in, essentially, what ZCAT ended up doing, to solve some of the problems to build it into the protocol.
+The first vertical ZPAC was called ZeroCoin, and it's much more like a blind signature scheme.
+Yeah, so…
+You can't just… you didn't really occupying signatures, because there's no bank in Bitcoin, and you have to do some other things. But they weren't thinking about it at the time.
+Alright, so additional questions we'll be looking at, at the semester, and touching on a little bit in the next slide, it's just…
+It's great if, we can survive some number of parties being dishonest, for consensus, but you really want to, like, incentivize those parties to be honest, so they're, like, a punish if they're dishonest, and, because it would be really bad to have a system that
+punish dishonest behavior and incentivize this dishonest behavior. So, how do we, how do we, like, there's a whole lecture design, which I can't, which is its own, its own, its own,
+Which is a whole other topic of how do you do incentives, and actually build these consensus systems such that they are rational and incentivized.
+So, we actually covered a little bit of this on the whiteboard, but just to provide, a little bit more of, like, activity, we'll,
+to look at, like, Bitcoin. So, look at the proof of work, and it's entirely possible, and it's happened many times, that two miners create two blocks at the same time, right? And so, how does the network resolve this?
+Well… Hopefully, the next block mined, mines, on one of these two blocks, and,
+and now this is, like, lowest chain and wins. It would be bad if we just now have 3, 3 blocks, 3 forks, and there's a incentive
+To do this.
+Which is that you dedicate a reward and fees for producing the blocks, and if you produce your block here, you're more likely to get the reward than if you produce your block here and now competing with these other three blocks.
+Any corrections on that?
+Why is it more likely? Because it's data. Well, so, if you produce your blog here, and then,
+Like, you, you, it's like this, and if you produce this, you're now in competition with these other two blocks, which means if someone went the block here, all you're working with wasted.
+You have a little bit of some of mine's unlocked here, but if you…
+money block here, then this one is gone, and probably, unless someone won the block at almost exactly the same time as you, they're gonna mine on top of this, because they also don't want to be in competition. There are…
+There are two big caveat to this would… and something that has to be terribly considered about in blockchain protocols, which is,
+This incentive makes a lot of assumptions about things, and there are some… imagine…
+Imagine, you magically, you just got really lucky, and you discovered two blocks at the same time.
+Like, so you just discovered this one, and then you're like, oh crap, I'm not competing with these other ones, participate in a lot on top of this. Do you think they're eager to not tell me one.
+about these two blocks, and let them, like, waste effort here in the hopes that you get a third block. And this is all the selling declining or block withholding. With a lot of the parameters to this, you have to have a certain amount of money power, and there's questions about latency and knowledge of what other people are doing. Another issue is that if you, if you build one pretty soon block or attend this.
+But he produced a new… put a new word of trim at that time, and it was, the proof of order is easy enough that you could produce a block, like, 100 times a 7,
+then no one would see each other blocks to build on them, and so you would get what's called, like, a Horton catastrophe, where everyone's just, like, looking here, and then, like, it just works out with nothing. And there's some really interesting protocols, which use, 3D exhibit graphs to, ultimately become, like, healed after that, and they let you do, like, block addition rates that are, like.
+10 times a second or 100 times a second, which is really nice to go to the low latency transactions.
+But we can't do the typical Bitcoin approach to this. You have to do…
+And then, as discussed,
+Bitcoin works by consuming outputs, and, producing more outputs,
+And basically the difference between the output you consumed and the output you produce is the fee, and the fee goes to whoever mines that transaction, just as a rule of the book.
+Does anyone have any questions on this?
+So there's a third outlet of this.
+That's one big, that's WC that I…
+So the question is, is there a third output that goes to the miner? Yeah, where's that paper? And so there is not a third output that goes to the miner. That's a really good question, though. essentially, for the call,
+deduces that the difference between the outputs and the output consumed, is, is the fee, and so the miner has a output that is produced in the box that they mine.
+That is the aggregation of all the, inverted genes from all the transactions and the locating ones.
+which is sort of a… like, you can do that because you're writing the protocol, and so you're just like, okay, we do this, and we just automatically produce this output. But it's sort of done in this very implicit, like, implicit way.
+and typically, when an output is consumed, it is, like, consumed fully, so, like, Alice can't spend, like, a little bit of this. She has to spend all of it, and then create a new algorithm. This is usually called the change algorithm that goes back to Alice.
+Can outputs then be combined?
+And I now have 10, and someone sends me 5. Some random person, not Bob. So, will I then receive an output at the end of that of 15?
+Yes,
+So you can have, there are a couple ways this can happen. You might have… Alice might have a number of outputs that she wants to aggregate, to spend the… and so I just drew that in a really simple, like, one, and this is called the input, which has, like, a signature and everything to spend that output, but you could have a situation where, like, Alice has, like, failure outputs, so she puts together
+And she could just aggregate them into one output to ourselves.
+But, given that she's paying a fee, she would probably only do that when she's, like, paying someone else, and then she would pay the change back to herself.
+such a way, but there is…
+There's all sorts of really interesting.
+economics of, like, maybe fees are even lower if she sweeps all her outputs of the one to save money later, and… Directionally, it seems like they just…
+This might be an incorrect understandings, but directionally, it seems like we just keep getting smaller.
+Yes, if they were only in single outfits, you would have this, spread. And there is actually… it's just an excellent question, that keeps getting smaller, imagine we pick… imagine Alice pays Bob, and the change is really, really tiny.
+It's, like, too small, to justify including in your transaction. You end up with what's typically called dust.
+And it is, like, these outputs that are economically unviable to spend, they just have to sit around,
+And they're also bad because the software has to treat them as if they're expendable, because maybe someone will want to spend them for some reason in some future point.
+So, yeah, it is, it is, there is this, like, slow accumulation of bus, and when fees get really high, the idea of that mechanism of bus is, like, fees below a certain… I guess, outputs below a certain amount, but there are economically unviable outputs, like, if fees are, like.
+imagine fees went to, like, one way pointing, for a print action, for including an output in a print action, then any output below that amount would be… you're losing money to spend with it, and so then you wouldn't be able to move that money. So there's sort of this balance there of, like, how you deal with it in this…
+number of very small amounts of Bitcoin that people have to… that the software has to care about that will never be used. and Bitcoin does have a rule that you can't produce, things below a certain size. I believe…
+Some other coins actually turned one a little off.
+And someone, and someone began, like, standing them and, like, shoving all their rocks up with, like, little tiny, useless. Well, bless you.
+But yeah, excellent question.
+Is it feed dynamically determined, or…
+So… fees are a pretty basic question. In Bitcoin, the miners are given the choice whether to include a transaction in a block, and block space is limited.
+So, if there are more transactions to include in a block that can be fit in the block, one imagines that a rational miner would include the transactions that have the lowest fee rate, that is.
+the most amount of money to the miner per space that they use up.
+Sometimes I might even do that. Sometimes people will, like, pay a miner out of the end, and the miner will approve a zero-team transaction unless they've been paid, somewhere else. But the idea is that a rational miner will attempt to
+maximize their feed rate. One important byproduct of this is that it blocks, if there aren't sufficient transactions to fill up a block.
+then the miner will just include all transactions, and so this produces the inbound refreshment with a few marketing doing one. Other different entities have different view mechanisms.
+And this is, like, what a, if you, if you go to their block explorers, probably a lot of people in the, class are, familiar with them, but if you go to Block Explorers, you can see Bitcoin transactions. This is an input, and then this is the, this is, these are the two outputs that are created,
+We have a time question. Sure, like, once you consider what's a fully employed, they…
+like, do they care? I think there might be some special treatment for the floating one person. So, people believe that this is actually a floating 5? I see, I see. So basically, it's like, ideally should be displaying, I don't think, like, kind of a basic supply of those shapes.
+Yeah, I think there's a fixed number of bytes for this column, and the lowest amount of, in Bitcoin, the lowest precision is one Satoshi. Okay.
+And the question for the chat was just, asking about the proceeding with a amount of Bitcoin.
+So that's what I… that's what I have. I'm happy to answer any additional questions,
+reminder to sign up for the class Discord, register for the class if you haven't yet. The source of truth for the class is, this, GitHub, so, check, check that. Next week, I'm really excited, I'm gonna be covering port graph and cache functions in much more detail than we did today. I love port graph and cache functions, they're, like, super cool. They seem like they shouldn't exist, but do.
+We're gonna be looking at commitments, local trees, digital signatures. It's gonna be a small lecture. These are some of my favorite, favorite topics.
+But I'm also happy, to answer any, any additional questions.
+Do you have any information about how we will receive the labs or instructions for those types of things, and how we submit them? I do not, but that would be an excellent question for the Discord, and you may have an answer.
+Yeah, so all assignments are going to be looked through GitHub.
+We'll perhaps send out a schedule of them shortly. We do have, virtual office hours, which will be through Discord. The University of Brazilia, who are also going to be doing the assignments, are going to be all due on the same day, so you'll be able to work with the University of Brasilia, students at the same time.
+They have the exact same virtual office hours, which will be Thursday at 2pm to 3pm. Matthew will be, on the virtual office hours to help there. The University of Brazilia, TAs will also be on there. There will be an English-speaking room, and obviously a room for the students at the University of Brasilia that do speak English, so they'll be working on the assignments at the same time.
+Then we also all have, in-person office hours for this group, which will be in our office space, which is right over there, just like the other side of the room here. We'll have snacks. It also overlaps with our Bitcoin Fridays, which is where we invite local Bitcoin, devs, which is… Ethan is one of those individuals. They come in and kind of talk about, Bitcoin work that they're working on all the time, so we invite everyone to be around.
+Matthew will also be there as well with the rest of the DCI team to kind of help out if anybody has any questions on the content in the course, but then also the assignments. But as I said, we'll send out the schedule, also, how you fill them out, but everything is on GitHub. You'll get more on GitHub, and, we're here if you need any help on it.
+But yeah, make sure you get registered, let us know if you have any questions. We're excited for this course.
+And I just want to make another appointment for Bitcoin Friday. It's just excellent, excellent conversations. Lots of people very, like, talkable and plugged into this space, are, are totally there. So, really, really fun, somewhat informal environment to just, like, discuss ideas and,
+Me people that overcome this, all this stuff.
+But yeah, I guess it's not dismissed, but if anybody has any, any comments, or any additional questions, or answers, or ideas, I'll, I'll, I'll, like, hang out, but, like…
+Me too.

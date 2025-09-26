@@ -1,0 +1,547 @@
+dciloaner
+Good to go, everyone ready?
+aren't.
+Well, thank you, everyone, for being here.
+Today we're gonna look at, sort of, the two, cryptographic primitives that you need to build, cryptocurrency.
+If you have these two things, you have… you have a lot of the building blocks you need. the first one is cryptographic hash functions, which I'll get into, and the second one is digital signatures.
+Interestingly, and we'll show this later, you can actually build digital signatures after, out of cryptographic hash functions.
+at a lower level, we're going to talk about hash functions, we're gonna talk about commitments, which are a thing that you can build out of hash functions that are very useful, including commitments in Merkle trees. Merkle trees should probably be under a heading that says accumulators.
+And then we're gonna have, a 7-minute break to cut the, the,
+The, time period in half,
+And then we'll move on to, digital signatures.
+And how to use them with, commitments.
+Alright, so we talked about hash functions before, but let's be a little bit more specific on what they are.
+So, a hash function takes, a arbitrary length string.
+And maps it to a fixed length output. And usually when we say this, we say that,
+A hash function has a number of, like, bits. It's like a 256-bit hash function, and really we're talking about this number n, which is how many bits are in its output.
+So hash functions can take 0 bits input, and it will produce a, n-bit output, or they can take, you know, as long as you want.
+Importantly, the mapping should be, random-looking, but deterministic. So,
+The idea is that, given the same input, you'll always get the same output.
+But if you look at it, it really seems like there is no connection between inputs and outputs, that the output was randomly sampled.
+And, we're gonna be talking about cryptographic hash functions, so when I say hash functions, I mean cryptographic hash functions. Hash functions are used in a number of other settings where they don't have to be…
+they don't really have to worry about attackers. A lot of operating systems will have, like, maps and hash functions that are just used for.
+Getting something random, but they're not expecting you to adversarially choose inputs to try to, make them non-random.
+So when you're using hash functions for the purposes we're gonna look at, you really want cryptographic hash functions.
+We call the input that you put to a hash function the preimage.
+And we call the output the image, and generally, the input to a hash function is designated by the variable X, and the output is designated by the variable Y. Not everyone does that, but,
+It is often done.
+So, SHA-256 is, the most commonly used cryptographic hash function. It is, 256-bit output.
+So, if you put in the letter A, that's the output you get.
+you put in the letter B, that's the output you get. You put in ABCDF,
+That's the output you get. You put in the entire, text of Hamlet, you get this output. So it can do very short, it can do very, very long things. You always get the same, output.
+Or you always get the same, length output?
+And the real reason that hash functions are so useful, well, there's many reasons, but one of them is that they create this, like, deterministic fingerprint of information.
+So… Like, you can't take this and get Hamlet out of it.
+But, as we'll discuss later.
+If you have Hamlet, and you have the exact same text as someone else, you will always get this.
+And it will be hard for someone to construct anything else that results in this one thing, so it's like…
+You can almost think of it as, like, the…
+Like, a fingerprint, or some sort of, like, essential…
+ID that the universe has assigned to this piece of information. It's, it's really, it's really kind of cool. It's very surprising to me that things like this exist.
+Does anyone have any questions?
+Alright.
+So… One thing that you can, you can do with this is,
+if you want to make sure that you have the same thing that someone else does, well, one way to do that is you could just send the entire thing over. But that could be a lot of data. Instead, you could just send over the hash.
+And now you know you have the same thing, but you don't have to compare it. Conceivably, you may not even have a copy of the original file. You may just have been like, yes, I saw the same thing, but I don't even… I didn't even store it.
+So…
+When we say, like, the mapping is random but deterministic, what do we actually mean by this? How do we define it? What does it mean to be random but deterministic? A dice roll or a coin flip is random, but they're not deterministic. Most things that are deterministic are not, are not random.
+All right. So, the typical way that this is defined is by imagining this, like, ideal magical object, and, that we can't actually achieve in reality, but gives us the exact properties we want, and then we can compare them to programs and see how close we can get to programs.
+So imagine that everyone has, like, some magic box with an input and an output.
+And this magic box has, like, a book or table. It's the same across all the magic boxes.
+So…
+When you supply an input to the box, let's say you supply ABC, the magic box looks at it and says, hey, does this already exist in the book?
+And if it doesn't.
+It rolls, it rolls dice completely randomly, and writes it down, writes the output of the dice down, as the, image, and writes the input that you supplied as the preimage.
+And then it outputs this value.
+And each time it gets an input that it hasn't seen before, it, like, writes it down and then rolls dice to decide the output.
+But if it's already seen an input before.
+like ABC, and this is already in the table, in the book.
+It will just output what is, what it's already written.
+This is called a random oracle,
+And, it achieves this randomness and determinism, because if it doesn't know a value, it is, it'll, it'll…
+actually randomly roll dice, but if it does know a value, it'll repeat that, so you get the same amount. And because this connection here is purely random, there really is no connection between input and output.
+Does this make sense to everyone?
+Yes.
+So… Every input… I mean, the same input gives us the same output, regardless of where.
+We run the hash munch.
+Right, right, or the random oracle.
+So, I'm confused if we're… if we're, like, dealing with, Ladies, thank you
+manually, and let's say, that was the… We usually see a kid.
+Like, you know, like, what the website has been… ease?
+Okay, so for example, if we're dealing with, like, money, and we know, like, Hold on.
+They have common bundles of money, like $100, $100, and because the output is always the same, we, like.
+No.
+If we see, The output and all that it works.
+Yeah, so that's a… that's a… that's a really good question. Let me repeat it for the, people on Zoom. So, while…
+While the first time you put something in there, you'll get, unexpected output, you could keep this table yourself by trying values, and if it's, say, like,
+all three-letter words, you could just create a table of all three-letter words, and then when you see this output, you would know it refers to that,
+you would know that that output or that image refers to that preimage.
+And this is actually, like, I'll cover this in a little bit, but I'll give you a little bit of a spoiler. People have used things like this for passwords, like password hashing.
+And one of the big problems with password hashing is while looking at the output, I can't tell what the input is.
+if your password is, like, low entropy, is easy to guess, I can just, like, try, like, all…
+passwords of a particular length, and then be like, aha, this is, this is this person's password. So you,
+You always sort of have to assume that the attacker can try a bunch.
+And for any of those, it can have its own table between input and output.
+Did that answer your question?
+Thanks, that was a really good question. Alright.
+So…
+This, this, this does everything we want it to do, and it's a good description of what we want.
+But it's actually not a good…
+implementation, because we don't have this, like, oracle in the sky that we can all talk to. And that everyone, you know, this, like, book that, is everywhere, and that anyone can ask queries of.
+Such things don't exist. You could have a server on the internet that does this, but the server could get hacked.
+So we want something like this, but we can't actually… like, this is actually difficult to build. it's probably impossible to build.
+Does it make sense why this is impossible to build?
+Like, technically, this would violate the laws of physics, because if you had two things that were, like, you know, like a light year apart, and you asked the random oracle, and it gave you an output, it would be like communicating it.
+Like, faster than the speed of light. In…
+Maybe. Actually, scratch that, but as a high-level idea, it's really, really hard to have this thing which everyone can agree on and query that is just there as an actual, like, database or book.
+Alright, so we want something that works like a random oracle, that gets us the same thing that a random oracle does, but everyone can run on the computer, and you could run on a machine that's, like, air-gapped, that has no ability to communicate with any other machine.
+So generally the definition, and I'm doing this at a very, like, high level, and for people who are really interested in the details, there's a bunch of really fun work on this.
+But at a high level, a hash function is considered secure if no one is able to distinguish it from a random oracle on inputs and outputs they haven't seen before. So, if you imagine a test.
+Where… You give someone a… You don't tell them whether it's a hash function.
+Or whether it's a random oracle.
+And you have them ask, like, queries for, like, inputs and outputs, they shouldn't be able to tell which one they're talking to.
+And so, in the sense that… in that sense, because they can't tell, we define it as, like.
+offers the same security. There's a really interesting set of work that shows that, in fact, even if you pass this, there are protocols which are secure with a random oracle that are not secure with any hash function.
+and there's a whole line of work on that, so, if that idea interests you, look it up. There's this paper by Kinetti, that, shows that result. But for most purposes, if you can't distinguish between which one you're talking to, then it's as if you're talking to a random oracle.
+More specifically, there are a number of properties that we really want, that come out of this, randomness. So, property one is collision resistance.
+So, you should not be able to, given, you should not be able to find two inputs
+That result in the same output.
+And you can kind of see how this comes from, the randomness, because if your output space is large enough, and each time you do an input, you're essentially sampling from that output space, all you need is the output space to be so large that no sample will ever result in the same value.
+The second one is pre-image resistance, which says, like, if I just give you an output.
+You can't find the input for that output.
+But this is very important, that if you already know this, if you, you know, you can go from the preimage to the image very easily. If you know the preimage, you can… you can find the image. But if you only know the image, and you try to find the preimage.
+it should be hard. And if this is, you know, really randomly sampling, the best you should be able to do is just try pre-images until you match the image that you have, and if the space is large enough.
+That should be very difficult to do. And then the final… the final one that people generally talk about is second premature resistance. So you have, an input, X, that ma- that hashes to an output Y,
+And now you want to find a different X that also hashes to that output Y.
+And this is different than collision resistance, because collision resistance, you don't actually care what the Y is. So, like, you're just looking for anything that collides. But in second preimage resistance, you have this, like, fixed Y that you're trying to find another preimage for.
+And I'm gonna go into this in a little bit more, detail, but,
+what these properties are. Does anyone have any questions or anything they'd like to add?
+And it's important to note that
+Like, collision should exist. You're taking arbitrary length strings and doing them to a fixed length.
+output. Like, your preimage space, your input space is so much larger than your output space that, like, they have to exist. It's just that they're hard to find.
+So looking a little bit more detail, at collision resistance.
+Like, how hard is it to find,
+to… to… to find them. Well…
+For a secure hash function, which is a hash function that has this, randomness seeming property that, can't be distinguished from a random oracle, it should take, two, it should take 2 to the n over 2 attempts before a collision is found.
+And this is actually really, really kind of weird, because if you think about it, like, this space here is 2 to the n, right? It's all binary strings of length n.
+So, it seems like you should have to search that entire space. but, the fact that it's actually half
+Er…
+The fact that it's half that space, or 2 to the n over 2, actually much better than half that space, is the result of, this property called the birthday bound, which is… and sadly, we… I don't think we have enough people in the room, but,
+The probability that two people have the same birthday
+in a room. I think is about…
+Well, what do people think, the probability, and some people may already know the answer to this, but what do people think the probability that two people have the same birthday? Like, how big of a… how many… how many students would you need to have in a room for some student to have the same birthday as another student?
+Yeah, yeah.
+So there's, like, you know, you can… Oh, sorry.
+366 is the number of people you need in a room today.
+have them.
+To guarantee. To guarantee what you're saying.
+Yeah, but, like, what's the chance there's a 50% chance there's, like, one birthday? And I believe the number… this…
+Exactly, yeah, so it's around 20-something, it's… I think it is 23 and, a fraction,
+But the reason is that
+you're not just doing, like, a comparison between one person and someone else. Like, each person you ask, the next one is, like, like, as you build up more of these, the next one is, like, it could be this one, or it could be this one, or it could be this one. So the size that you're trying to collide with increases as the number goes up.
+Sut?
+Anyone have any questions on that?
+It is really surprising, though, that this, like, works this way, or surprising to me.
+It's usually called… it's sometimes called the birthday paradox, but it's not actually a paradox, it's just counterintuitive.
+Exactly. So yeah, this is, a collision with a specific, property, would be a preimage, or a second preimage.
+But once you fix it to a particular image, all of a sudden it gets so much worse.
+And, I don't know, this is just maybe,
+like, when I first learned about this, I was like, this… this can't be possible with, like, a computer program.
+Like, I give you a computer program that's a hash function. There's no secret key, there's no secrets at all. You can look at the program, you can step through it in a debugger, you can go to the final step, and then try to, like, figure out how to make a collision. I give you everything.
+And I say, it doesn't even matter, choose any input you want. Your inputs are unbounded. And…
+And collisions must exist. It's not like I've designed the program. There should be, like, enormous numbers of collisions, because one set is so much larger than the other.
+And yet, you can't find them. And it's like…
+really, really kind of surprising. Like, when I first heard about this, I was just like, okay, this has got to be nonsense, and, you know, spent, like, all night trying to find collisions, because it's like, but I can see the program, there's no, you know, like, block ciphers, I feel like I buy, right? Because there's a secret key, you don't know the secret key, that makes it hard. But there's no hidden information here.
+It gives you everything. It's like a magic trick where you can see, you know, all the cards in the deck, and yet you still can't find collisions. So, I find this to be almost like eternal wisdom about the universe, that such things exist. It's really surprising.
+So we don't know that they actually exist, I believe.
+but we know that there are hash functions that we cannot currently break. Hash functions of the past have been broken, but it's just kind of surprising to me that you can't think real hard and then,
+Yeah. Well, as we'll talk about a little bit later, there are cryptographic assumptions that you can build things like hash functions from, where you assume that a mathematical problem is hard to invert.
+And if it is hard to invert, then, that's there, but I don't think anyone has…
+like, proves that they, they're, they're hard to advert. You just assume That they are.
+And we haven't had much luck.
+So, premature resistance, you fix the, you fix the output.
+And then you attempt to find a collision?
+or you attempt to find an input that collides with that output. But unlike,
+collisions, it's just, it's just 2 to the n. So it's like, as you expect, you have one of these, you keep trying until you find something that matches that Y.
+And second pre-image resistance, we already talked about and is also 2 to the n.
+And in addition to all of these, it should be indistinguishable from random.
+Alright, so… How hard is it, really?
+Well, if n is 160,
+then collision resistance should be approximately, 2 to the 80, half of that. And pre-image resistance should be 2 to the 160, and so on.
+So, how many hashes does Bitcoin do, per second?
+So Bitcoin does about this many hashes per second, and these hashes are actually, like, double invocations of SHA-256, so you could, double that number if you wanted. And this is almost 2 to the 70, hashes per second. And if you look at the line with time.
+It's, it's, it's, the blue line is total hash rate, so we hit right about there, I think, a day or two ago.
+And this is an incredibly large number.
+And if we look at it for, hour, like, how many hashes per hour, or hashes per year, it's like, wow, that's, that's really big. They used to, they used to tell us way back in the day with cryptography that anything that required 2 to the 80 computation was safe.
+And, like, Bitcoin's doing, like, 2 to the 80…
+2 to the… doing 4 times more than 2 to the 80 every hour.
+And to give you a sense, there's about 2 to the 79 stars in the known universe.
+2 to the 124 is about the number of Bitcoin hashes Bitcoin could do in a billion years. 2 to the 126 is, 128 is the collision resistance of SHA-256.
+2 to the 166 is atoms on the Earth, and note that, like.
+Powers of 2 get big really, really quickly. Like…
+Like, this is, like, kind of close to Bitcoin network in a billion years.
+you know, Like, 16 times larger.
+But, like, premature distance is much, much, much larger.
+Does anyone have any questions on this, or did any, like… I think I did all the math on this correctly, but if I didn't, please tell me.
+change.
+Yeah, yeah, so each, each, each time we go up, so to get from 82 to 83, you'd have to double the size of the network.
+And when I say collision resistance of SHA-256,
+I mean, like, I'm assuming SHA-256 is secure. If someone were to break it, they could… if someone were to find a cryptanalytic attack on SHA-256, they could probably do it much better than this.
+Oh, thanks for that question.
+Alright, so… The Bitcoin network can do 2 to the 80, hashes in about 15 minutes.
+SHA-1 was, a 160-bit hash function, so probably the… not secure against the Bitcoin network.
+But what about its preimage resistance?
+Its pre-image resistance is, 78 billion billion years, which is a very big number. Our, our universe is 2 to the, 34 years old, and so this would be 2 to the…
+2 to the 130, so a number this big, times longer than, the current age of the universe. So, like, repeating that a number of times. So it's interesting how it just sort of, like, there are these cliffs, and once you get beyond them, it becomes very, very hard.
+And then SHA-256, and these numbers are just enormous numbers.
+So does that mean that we can actually break, SHA-1 in 15 minutes in the Bitcoin network?
+Well, these are all lower bounds that assume infinite space, and we'll look at why that's the case. We're just assuming that you just have, like, an infinite amount of RAM.
+So let's look at a really, really simple, collision attack with brute force.
+You hash an input, you check a list of previously seen hashes. If the hash is found on that list, you found a collision. If no, add the hash to that list, and then,
+Continue.
+So you have this list of inputs, this list of outputs that you're just adding to.
+And if you ever find another value that happens to, collide here, there's actually a bug on the slide, this should not be, this should have the same value as this, or it should be another number. But, if you ever find another input, another preimage.
+that, matches, another output, another image, you've found a collision.
+But note that this, that this list, if it's gonna take 280 hashes to find a collision.
+That's 280 of storage.
+Which is a really, really, really big number. I've always enjoyed this dinosaur comic.
+in which T-Rex says, all it required was infinite storage space, brute force, the approach of kings and the king of approaches, in which he points out that you can build, like, AI with just, like, infinite storage space because you can just
+Put all, human conversations and just build up a big input-output table.
+Alright, so…
+2 to the 80, storage is… and it requires more than 2 to the 80 storage, because you actually have to store, like, the hash, and you have to store the input. That's about 90 trillion 2TB hard drives. So it's, like, within the, 12 terabytes, so it's, like, within the realm of possibility that someone could, like.
+maybe build something like this, but it's, like, at the edge, like, there are not this many hard drives, currently on the Earth, and…
+You would, you would probably have to see a large number of doublings before we could manufacture something that could do this.
+So, what are some better approaches? Because even though the computation here is low, the actual storage cost is high.
+Well, one approach.
+is the computation costs are low, and the storage costs are high, why not use an algorithm that trades off memory for compute? and then you can make the storage costs cheaper, computation costs longer. And the second one is attack the function itself.
+Especially if computation and storage are both too expensive, don't treat it as a random oracle, treat it as a actual program and try to find some flaw in the program where it doesn't function randomly.
+So looking at the first one, here's a really, really simple,
+attack. There's, like, way better attacks that are really, really cool, they're just a little bit more complex. So I'm showing this one for the ease of explanation, but if you enjoy, collision attacks on hash functions, like, strongly recommend reading this paper.
+Alright, so let's say you take a hash function, and you take an input, and you, like, hash it, and then you take the output, and you hash it again, and you take the output, and you hash it again, and so on.
+Well, eventually you're gonna get, when you hit a collision.
+You're gonna collide with one of your prior values, right?
+And because you've chained all the values by hashing the output as the input in the next one, you're gonna cycle back around.
+So you could do, if people are, familiar with, like, the tortoise and hare cycle finding, you could use that to find the collision. And that requires no memory, but does require additional computation. You just have to have the memory for the two pointers. Or additionally, you could leave, like, a breadcrumb
+Breadcrumb trail. And then when you cycle back, you'll realize you have cycled back.
+Does that make sense to everyone? Like, what's, does anyone have any questions on this, or ideas?
+And then the second approach here is, is just attack the function itself.
+MD5 was broken this way, SHA1 was broken this way. Even though you could break SHA1 with the Bitcoin network, or with something of the scale of the Bitcoin network, you could not actually use the Bitcoin network, because it's built for a different hash function.
+but most of the time when hash functions get broken, even MD5, which had, much less collision resistance because it was a…
+I think it was a 128 output size, so it was only 2 to the 64. It's usually the way that hash functions get broken is not that someone builds a computer the size of Jupyter and brute forces them.
+But that, someone discovers a weakness in the actual implementation itself, and then it becomes far cheaper to attack them.
+And let me just check on time.
+Art.
+So, what are some uses for hash functions? Well.
+you can use them as a secure pointer to some information. You have a, you have,
+you have some… you have some words, you could almost think of these as, like, hyperlinks, where you're like, I'm linking to this book, and then your link is just, like, the hash of all the data in the book.
+and then…
+you will, like, if anyone has that book, they'll be able to match it up. There's actually a really interesting book called,
+when, Google met WikiLeaks, where all the citations are hash links, they're like hashes of the data, so if you just… so you could, like, verify in the book the exact text of what was being cited in the text.
+You can use them for proof of work, as we saw in last class, and notice that proof-of-work is very much making the same randomness assumption. If it was not random, if you could, like, skew it or bias it towards one number or another, you would be able to, like, mine faster.
+And then also for, it's, it's often used for, hiding passwords. So, like, you have a password, you hash the password, and then you, send the password hash to the server,
+And, then the server just stores the hash of the password, so if someone steals the server's database, they can't figure out what the password is, only, as discussed earlier,
+They can, if your password is, like, is low entropy, because they can just try passwords until they find a map.
+And,
+we can do much better things for passwords than just hashing. It's outside the scope of this class, but there's been an enormous amount of work on this. I'm presenting a very early type of password scheme, but the world has evolved beyond this, and generally.
+Companies that take security seriously are not doing this for exactly this reason.
+Does anybody have any questions on this?
+Alright.
+So you're gonna take a, 7-minute break?
+And then we'll be back.
+What time is L?
+dciloaner
+dciloaner
+01:06:38
+Alright, are we good to start again?
+Testing.
+Can everyone hear… hear me on the Zoom?
+Can everyone hear me? Is the Zoom… is the Zoom people able? It's awesome.
+All right. Thanks, everyone.
+It's time.
+Alright, so…
+We were just talking about the uses for hash functions, and we are going to look at,
+another use for, a hash function, which is, commitment. And you can kind of, like.
+one way to think about a commitment is, imagine you discover, you make some, like, discovery in physics, and you don't want to, like, tell anyone yet, but you want to, like, prove to the world that you had the discovery before anyone, before you reveal it. This is actually a real thing that occurred, there was,
+In the 17th century, someone discovered the calculation for the curvature of a chain, and they, wanted to prove that they knew it while they were, like, writing up the full paper.
+And so what they ended up doing was they took, like, the description they had written of how it worked, and they…
+I think took, like, the first letter of every word, and, like, scrambled it up, and composed this, like, short poem, and then, like, put it in the, put it in a bunch of letters that they sent to people. Another way of doing this, which is sometimes done in, patents, is…
+You, like, write a letter that describes it, and you, like, mail it to yourself, and it gets timestamped by the,
+it gets time-stamped by the post office, and then you can, like, open the letter in front of a judge. I don't know whether people would buy that or not, because it's very easy to fake, letters, but this idea that you want to commit to something, but maybe you don't want to, like, reveal it, and you want to reveal it later.
+So, you could use a hash function for this.
+you could, hash the physics idea, physics discovery, and then you could, like, say, rent space in a newspaper and have it published there, or, like, put it on Twitter, or put it on GitHub, so everyone can go back and see that it was there. And then later, when you publish, X, the value you committed to.
+everyone can check that the hash is the same, and that you had that idea at, at some point in the past. And I'm somewhat conflating, timestamping with commitments. Commitments don't get you timestamping, but they get you the ability to,
+take a messenger value And, Hide it.
+While getting binding. And so what do I mean by that? I mean, by hiding, I mean that if anyone looks at the commitment C,
+They won't be able to determine the value of the commitment.
+And, no one can open the commitment to a different value. So I can't say… I can't commit to X and then open the commitment to B.
+And so…
+here's one commitment scheme that uses a hash function, where you just hash the value, and then you reveal the value, and then to check whether the value is actually what was bound in the commitment, you just hash the value and see if it's equal to C. But why is this not secure?
+Given these two properties of hiding and binding.
+Well, what if I were to, commit to, like, the word Apple?
+And then I were to publish C.
+Was it… The problem is that,
+if the value that you committed to is guessable, someone could just try guessing it, and they might be able to guess it. If it's, like, a short word, they could build a lookup table of all the short words, and then when I publish the commitment, they could say, that's what it is. If X was, like, something that was not guessable.
+That is, it had very high entropy, like, say, like a,
+256-bit random value, then this would be secure. But if it is something that's, like, you know.
+like, someone's name or something low entropy that can be guessed. Someone could look at the commitment and try things and guess it.
+Any… any questions on this, or reactions?
+Yes.
+So, I guess for this to not be secure, then, you'd need some knowledge, though, of what it… what the, like, input space…
+is, maybe? Am I thinking about that interaction? I think, I think you, you wouldn't necessarily need, knowledge, but you could just try. So, for example, if this was, like,
+if you just happened, because you want to break this commitment scheme, and you had built, like, a giant table of all 10-letter words, and then someone publishes a commitment, you just automatically check and see if it's in that table. If it's in that table, you break it, and if it's not, you don't break it. But…
+If it is the case that it is, something that is very high entropy, you will not succeed.
+But it would be nice, it's nice to have schemes that work, even if people choose low entropy, values.
+And this is essentially the same thing as the password problem, where, you know, passwords get leaked, password hashes, yes.
+a table issue. We want to just add a solid… holiday.
+Yeah, that's exactly what we want to do. If we add some additional entropy to have it have sufficient entropy that it can't be guessed, then it becomes secure. That's a really good point.
+Sense that they can still generate a lookup table to have the salt.
+But it would have been happening forever.
+So if they, if they have the salt, in the password setting, yeah, they could also generate a lookup table. But in this setting.
+What if we did this that's very similar to what you suggested? We choose a random key, like a 256-bit key, and then we, like, hash our secret, and then some separator, and then the key, and then when you reveal, you not just reveal X, but you also reveal the key as well.
+And that, and because the key is only revealed on the reveal, side of things, no one can guess it.
+Often in Bitcoin, and in other settings, we will commit to things, and we either don't care about the secrecy, or it's, like, some giant high-entropy value, and so this, we don't do this, but it's…
+Because the value is from a random distribution that has sufficient entropy that it can't be guessed. But often… or sometimes we don't even want
+Like, for a lot of hash function things, we don't really care about hiding, we just care about binding. We just want a short, like, a hash pointer. We don't care if the other person could guess what it is, we just want a short.
+hash pointer to some information. But yeah, so we can use a key here.
+and then when we reveal, and then when we do check reveal,
+I mean, I know this is actually the concept of a famous magic trick, I think, in Penn & Teller, where, like, if your physicist, for example, wants to prove that they knew the thing ahead of time.
+They can just write down a bunch of letters that mean nothing, and then once they figure it out, they can go back and say, okay, let me just fill in the first letter of each word in my proof, and then we just use those letters.
+And so, like, the magic trick usually is a magician will come up with a word and write it down on a piece of paper ahead of time, and they'll show you a bunch of pictures of the animals with different names, and they'll just give you the Spanish name or the German name of the animal, and say, I knew it ahead of time.
+Because they're obviously just faking it and switching out the letter.
+Yeah, that's an excellent example, where, to repeat for the people on Zoom, magicians will sometimes, create something that seems to be an effective hiding and binding commitment, but they'll actually violate the binding,
+the binding of the commitment, by being able to, if I've understood you correctly, by being able to, like, they, they, they bind to a large number of values, and then one of them is close enough, or they can sort of, like.
+Back-compute what they want out of the things that it looks like they've committed to.
+And so it's very important to, like, actually, have, binding from, cryptographic assumptions, because it's very easy to be like, oh, actually, I said.
+people predicting events in the future. Maybe you believe in Notre Dame, maybe you don't, that's a… people can choose to believe or not. But, many of Notre Dame's predictions have been, attributed to different historical events, and they can't all be
+those different historical events, so the ability to take something and then show, like, argue that it's actually a commitment to X, is… is…
+is probably not secure if you're just, like, looking at words, but with hash functions, we can make it secure. If only Notre Dame had hash functions, we would know that Notre Dame actually predicted the future when he, like, you know, hashed a New York Times article and…
+Whatever century he was from.
+Alright.
+So let's think about, another scenario.
+Let's say that you want to…
+Commit to a whole bunch of different things.
+and you only want to, like, reveal, like, one of them. Maybe this is just efficiency. You're actually, committing to, all the books in your library, and then,
+when someone asks you a query, you don't want to have to send them all the books in your library, or the hashes of all the books in your library. how do we prove…
+If you have, like, a set of values like this that, and you want to commit to all of them, how do we show that, like, ABC is in the set without having to send
+The entire set to everyone.
+So we could do… you just hash every single thing in the set, but this, scales poorly, because now you have to send, like.
+all of these hashes to the person, and then they… and then they check whether it is in that. This is,
+This is… this isn't… this isn't nice, because you have to just basically send everything in the set, or a hash of everything in the set.
+So what's another way we can do this?
+We can use what's called a Merkle tree. So what we do is we do hash everything in the set.
+But then we take the, the, we take the hashes, and we hash them together again, and then we take those hashes, and we hash them together again, and we get what's called a root, or a Merkel root.
+And these are called, leafs.
+I don't know why everyone calls them leafs rather than leaves, but it seems to be a common parlance. And the hash states here are usually called intermediate nodes.
+In this case, this is a Merkle tree of 4 leaves, but you can have Merkle trees of much larger, where you have more intermediate nodes.
+Any, any questions on this? I'm gonna show how you do inclusion and exclusion proofs, with this next, but, does…
+like, does the sense of hashing these values,
+Like, does everyone sort of get the general idea here?
+Art.
+So, I can send you R,
+and then I can prove that, ABC is included in the set. How do I do that? Well, what I do is I, send you ABC,
+and then I send you, 4 and 5.
+And then you can take, like, ABC and hash it to get 3, and you can take 4 and 3 and hash it to get 6, and then you can take 5 and 6 to hash it to get the root, and then you can check that the root's the same.
+And this is, used a lot in, Bitcoin. The,
+the transactions in a Bitcoin block are, in fact, stored in a big Merkle tree. And one of the nice things about this, although it is not used as much these days, in the past,
+There was this,
+protocol called Simple Payment Verification, where I want to prove that I sent a transaction to you, so I take a Bitcoin block.
+and I, produce a Merkle proof that the transaction that pays you is in that block, and you trust it
+not because you have the entire blockchain, because if you had the entire blockchain, you could just check whether it was paid or not, but because you look at the proof of work, and I send you, like, a bunch of block headers that have a lot of proof of work.
+And then I proved that your transaction was included in, like, one of them with, like, 6 block headers on it. And given that proof of work costs money, there's sort of an economic argument that,
+that you're, that these are valid Bitcoin blocks, and they haven't been orphaned, and that your transaction is included. However, because you were just looking at the…
+Headers, you don't know… like, there might be an… like, they could all be invalid blocks, and someone could have spent a bunch of time mining something that was invalid.
+So, it's, like, useful, it proves that a certain amount of proof of work was done on your transaction, but, I believe it is not used much because it has the lower security, and that you don't actually check, every transaction in the block.
+Merkle roots are also used a lot in,
+Zero-knowledge proofs, because you can then prove correctness, and then also prove that something's included, and with that, you can get this, like, really nice scaling where you only have to provide a couple of values.
+Any questions on how this works?
+Show of hands, how familiar are people in the room with, Markle Roots?
+Alright.
+I think that they're just a useful tool to have outside of cryptocurrencies, anything that you're working with.
+It's just… it's just really nice to be able to commit to one value that then, like, basically commits to a whole bunch of other values, proving inclusion.
+and proving exclusion. And I should be clear that this, like, Merkle trees are a type of accumulator. There's other types of accumulators. We won't be covering other types of accumulators here, but there is a branch of cryptography which is concerned with.
+Proofs of inclusion and proofs of exclusion. And they are… the more, generic title for these sorts of things is, accumulators.
+Alright, so what if we want to prove exclusion? How do I prove that something isn't in the Merkle tree?
+So if I go back here, it's like, what if I want to prove that there's no… that there… that ABC is not in this Merkle tree?
+What's one way I could do it?
+Well, one way I could do it is I could just do all the leaves. I could open all of them, and you could check and be like, oh, yep, it's not in there. But that's not… that's not super efficient.
+Another way I could do it is if I sorted all the leaves, I could prove that,
+since they're sorted, ABC, alphabetically sorted, should be between these two numbers, but they're not there. And so by showing two things that, like, bookend where it should be, and there's nothing in between, I can do a proof of, exclusion.
+Importantly,
+someone has to check that I actually sorted them. Like, I could conceivably, if I'm just showing you the root and this proof.
+You have no…
+you should not be convinced, because I could have not constructed the Merkle tree in a sorted manner. So you usually need, either, like, you check the Merkle tree by looking at everything, and then you can forget a bunch of it, or there's some sort of other proof mechanism that proves that I constructed the Merkle tree accurately.
+but this is, this is used in a large number of protocols, including DNSSEC, where you can prove that, something doesn't actually, like, a domain doesn't actually exist in a,
+In, in, like, a DNS record by doing exactly this sort of thing. and it's nice because you only reveal, like, these two, and you could actually, like, keep the other information, somewhat secret.
+Does this make sense to everyone? Did anyone have any questions on this?
+Thoughts.
+Alright, so…
+Merkle trees, they scale really, really well. To build a Merkle tree, you need the end leaves, and you need to basically do…
+2N hashes, approximately 2N hashes. To add a new element to a Merkle tree, you have to sort of add the branches, so it can be, log2n.
+And proving membership is also approximately log 2n. And log2 is, is, is really, really efficient, really scales well. You think about it, you have, 8…
+8 leaves, you need 3… you need to reveal 3 values. Okay, you have a thousand leaves, you need to reveal about 10 values. You have a million leaves, you need to reveal about 20 values. You have a trillion leaves, you only need to reveal about, 80. So, like, for really, really large things, this is,
+it just scales extremely well. Versus, say, sending over, like, a trillion books.
+Here, you would only have to send over, like, 40 hashes.
+Alright, so now we're going to look at digital signatures.
+So the basic idea with a digital signature at sort of the high, abstract level, is that you generate a, a key pair, using some algorithm, to, to do this for you.
+And you have a public key and a signing key. Sometimes the signing key is called a secret key, sometimes it's called a private key, sometimes the public key is also called a verification key. For this, I will be calling this the public key and the signing key. And you use the signing key to sign.
+you take a message, and you take the signing key, and you generate a signature.
+And, what the signature,
+allows anyone to do, who knows your public key. They can take the signature and the message and determine, whether you signed it or not.
+Whether that is a valid signature for that public key and, message.
+And security, at a very high level, is defined as not being able to create a signature that passes verification
+For a message you have not yet seen.
+When you don't already know the signing key. So if you know the signing key, sure, you can produce as many signatures for messages as you want. You also, if you've already seen a message.
+okay, you can present that, one a bunch. But it is when you don't have the signing key, and you haven't seen a message before, if you could produce a signature for that message, typically called a signature forgery, then the signature scheme is not secure.
+How many people are familiar with digital signatures?
+This is also one of those things that is surprising to me that it exists. I remember when I was a kid, and I heard Bill Clinton on the TV talking about digital signatures, and I was like, that can't possibly work. You could just, like, copy-paste the signature onto a new document.
+And this is a very informal definition. If you're really interested in this stuff, there are much, much more concrete definitions, but this is essentially just the flavor of it.
+Alright, so I promised that I was gonna tell you how to build a digital signature scheme from a hash function, and there's a bunch of ways to do this. One of my favorites is Lamport Signatures.
+imagine that your message is really, really simple. You only need to sign a single bit. So you have this message M, and it can only be either 0 or 1. How do you build a digital signature scheme, if you're… if you… if you allow that? Well…
+What you could do is you could generate two signing keys, a signing key A for the message being 0, assigning key B for the message being 1, and then you hash signing key A to get public key A, and you hash signing key B to get public key B,
+And then this is your public… this is your public key. You publish this, as your total public key, both of these, hash outputs.
+And then to sign 0, you just release this value.
+And everyone can go and check and say, hey, this, the, this, SKA hashes to, public key A, and therefore you've signed the message, you've signed the message, 0.
+And if you wanted to sign the message 1, you would release, SKB,
+And everyone could check that, public key B is, that it hashes. So, as I said, if message is 0, your signature is just SKA, message is 1, signature is SKB, and then to verify, you check if your message is 0,
+check if the… if the signature hashes to public… public key A, PKA.
+Kinda seems like cheating,
+But, but it does, it does, it does work with some, with an asterisk around work.
+Anyone have any, thoughts on this, or…
+Reactions or questions?
+You have to put the method inside SKA, or you just generate a random signature.
+Just completely random. Both of these are just randomly sampled, like, 256-bit values.
+But,
+And so if you release this one, because people don't know what the preimage for SKA is, the signature is only for the message
+the bit 1. But, alright, so that's great, but how often do we just want to sign, like, a 0 or a 1 message? That's not a, that's not useful in most contexts. But you can actually scale this up to,
+Any length. And generally you would take a message of.
+arbitrary length, use a hash function to make it, like, 256 bits, and then do a Lamport signature for each bit.
+And the way this works is that you basically just have the Lamport signature scheme I just identified for the first bit, and then another Lamport signature for the second bit, and another one for the third for each position in the bit.
+So, if I want to sign the message, 0010,
+I just release these values,
+And then I've signed that.
+But there's two problems with this. One, your public key is, really, really big, because it's a bunch of…
+It's like two hash outputs per bit of what you want to assign. And if you use a hash function, you can make it nice, you can make it nicer, because then you only need 256 bits.
+but still, that's 256 times, 2 times 256 for the output, and then your signature is, like, each one of these values. It can get… it can get fairly large fairly quickly. The other problem
+is, you can't reuse public keys. It's a one-time signature scheme. So consider I released all of these.
+And then I sign another message, and the first bit of my other message is, like, 1.
+and another one is 1. Well, now people, because they… because they have both of these,
+secret keys have been released for the same public key, they have the ability to produce, signatures for different messages, and this violates our security, and it's really bad. So, you can only use LAMPORT signatures once, otherwise, security is lost. And then you… so basically you use it, you have to throw away the public key.
+People have built hash-based signature schemes, that don't have this property, but they're far more complex.
+one of the post-quantum signature schemes, currently is, Sphinx, and it is, built on hash assumptions, but it uses Merkle trees, and it uses a bunch of other things so that it… so that you can do
+Many, many signatures for a single public key without, without losing, security,
+there is actually a positive to this loss of security, and this is used in some Bitcoin protocols, where you want to punish
+what's called equivocation, where, like, I sign one message, and then I sign a different message, and I send it to someone else, so I sort of, like, lied. I was only supposed to…
+Agree to…
+to one thing, and I actually, like, agreed to two… two things. And the cool thing about, this one-time property, which is usually viewed as a weakness, but is actually useful in this, is that if you leak the key.
+someone can take the two, like, double spends of the equivocation, compute your key, and then, like, prove that you cheated, and, like, punish you in some way, because they can, like, spend money. So there are some, ways to actually use this for making protocols secure, by the fact that your key leaks out if you ever use it more than once.
+I think it's a dome.
+So, who's connecting the value to the sign-in?
+Connecting the values to the signing key.
+Publish.
+So you publish this, can you tell them what… which one is 0, which one is 1?
+Exactly. So, like, it is implied by the, the order that you publish the, the, public key that this maps here and this maps here. You do have to be somewhat,
+Careful that you don't do it, that you, like, commit to the order, because someone could, like, re… could move them around.
+but then it would be a different public key.
+Any other questions?
+Oh, and any questions from the chat?
+Art.
+Alright, so as we talked about, Lampport signatures are one-time signatures. This is usually what it is referred to when signatures have this limitation where if you sign more than once, they break.
+We really want signatures that don't have this limitation. It would be, really annoying if in Bitcoin, you forgot that you used a public key once, and you reused it, and then you leaked your entire secret key, and all your Bitcoins got stolen. And most signature schemes do not have this limitation.
+So, we're gonna look at, Schnor signatures,
+Let me just check the time. we're gonna take a really quick look at Schnorr signatures,
+Which is a signature scheme that's very popular. It's used by Bitcoin. It's, very similar to ECDSA, which is also used by Bitcoin.
+the… I'm gonna, like, walk through the math, but if you,
+Yeah, but I think if you want to understand it better, my slide here, like…
+sort of, like, look into it more, because working through the math yourself, and I think there may be some homework assignments on it, is, sort of how you, how you understand it.
+So the basic idea with Schnorr is that it's based on an assumption that the discrete log problem is hard. And what do I mean by that? I mean that for some particular group.
+if you take a generator, and you raise it to X, it should be easy to compute, what
+X… what G to the X is, if you're given X. So if I… if I tell you X, you can just do the exponentiation yourself.
+You're good to go.
+But, if I just give you G to the X,
+and then I say, find the discrete log, find the log of it, find X, given X, given G to the X, that should be really hard.
+That make, like, any questions on that?
+So… To generate a key pair.
+for your secret key, you're, you're just gonna take, a random value X, and for your public key, you're going to take, the, the, like, minus X and raise it, raise G to minus X, and that's your public key is Y.
+And then when you want to sign, yes.
+G is a generator, so it's like, think about it as a,
+Like, a… a… another number in the group?
+Which has the property that it, that, that applying an operation to it gets you the other, other elements in the group. I think,
+kind of take this on faith, and then look into it in more detail, but I don't have time to sort of get into the number theory behind it.
+But G is some point that we've all agreed that we're gonna use for this purpose. It is not specific to the KeyGen, it is just a public constant.
+Bless that.
+Have a little securities, and… X has to be sufficient data.
+So, generally, this is, like, done, like, mod, or some sort of thing that wraps back around to itself, so it's not, like, just the integers where it's, like, infinite.
+But yeah, it's… it has to be a prime… I believe Schnor groups generally are prime order groups, but if you don't know what prime order groups are, don't worry about it.
+Alright, so to sign, you choose this random value K, which is usually referred to as the nonce. You raise G to the K to get this value R, and then you take your message.
+the value R, you… and you hash it together, and you multiply it times your signing key, and then you add K to that.
+And, your signature consists of R, which is G to the K, and S, which is, K plus your secret key times the hash of the message.
+And it's really important that our, that K is random each time you sign. If you ever sign two messages and use the same, K, it will leak your secret key.
+And there have been a large number of attacks on this in Bitcoin, and even linear relationships between, Ks, like Ks that are…
+there was someone on Bitcoin that was, like, chose a random K, and then I believe was, like.
+Adding one to it to generate new Ks.
+And someone stole all their coins really quickly. There's a… there's…
+There's a large number of bots that just monitor, to see if these things are, related and not truly random, and then will, like, instantly take your money if you, if you get this wrong.
+There was also, I believe someone jailbroke, I think it was a PlayStation 3, because they just hard-coded the value K, and they were able to break the signature… signature scheme on the PlayStation 3 because of that. But anyway, so your, your, your signature consists of R, which is this random value.
+And S, which is,
+your secret key times the hash of your message, plus K.
+And then to verify.
+you take, R and S, which is your signature, and you raise G to the S, and then you multiply it times Y, which is your public key, raised to the hash of R in your message, and you check whether this is equal to R.
+And the question is, like, why is that verification?
+Well, the reason it's verification is if you expand all of these out.
+What this… what the left side of this equation really is, is this… is this expression.
+And if you simplify this expression, you end up, with…
+this… you end up with it being G to the, like, X times the hash of the message, plus minus X times the hash of the message, which causes the… this to cancel out.
+And so you end up with it being R times,
+G to the, actually, I think that should be G to the 0, and so you get R. So,
+the equation is such that, if this is a valid signature, it ends up being equal to R. And so the person can, take these public values, like, G and Y, which is your public key, and raise the things to it and multiply it, and if they get R out, they have,
+They, they know that it is a valid signature.
+And I'm sort of giving you, like, a taste of Schnor, if, if, if…
+there's a lot here, so, like, if you really want to understand Snore, look into it… look into it more.
+And it… the… the… another security assumption is that the hash function that is used here is a random oracle.
+Yes. I'm hearing Josephine, can we…
+generate through random K? I thought, is it feasible to generate… Something truly random.
+Alright, so the question for the people on Zoom is, is it, is it,
+Is it possible to generate something which is, like, truly random?
+And the answer is, like, is yes, in that there are certain things which physics believes are, like, physically random, and you can sample from those things. Generally.
+There are random number generators that are based on physical randomness, which are used.
+sometimes they're just random enough, like, Intel chips, the random number generator is, like.
+Two linked capacitors that have some voltage flow between them, and it's a chaotic system.
+So, yes, we can get truly random things, but we don't necessarily need truly random things.
+And there is a, like, what we could do is we could take, like, some secret values, and hash them together with the message and get K.
+Because the…
+the issue is always, if it's the same public key, and so the same secret key, and a different message, having two Ks that are, like, the same, or… or related is bad.
+But if k changes because it's, like, related to the hash of the message, then, you can actually make this, like, deterministic, just a deterministic secret. And so a lot of implementations don't actually, like, sample from true randomness, they just use, like.
+some hash of, like, your secret key and the message, and that way it guarantees that if you get another message, it will be, you will get a different K.
+Thanks.
+Is randomness bad, then? Perhaps? Because randomness implies that one out of a million chance you could accidentally leak your key? So…
+I don't think randomness is bad here, because you're sampling from such a large source, that if it was truly uniformly random.
+you're dealing with the same, like… like, someone could just guess your key by, like, getting lucky and guessing, you know, 1 out of 2 to the 256, but 2 to the 256 is a very large number, enormous number, so…
+all the cryptography… almost all cryptography is sort of based on these assumptions of these numbers are so large that someone can't guess it. So it should be… it should be fine.
+But, like, you know, because someone could also just guess your secret key up here. But what if your random number generator breaks? And we've had a number of examples of this happening in Bitcoin. One particularly humorous one was,
+Some cell phones didn't have good random number generation, so there's this website, random.org, that will give you random numbers.
+And so, as a fix for cell phones, that didn't have good random number generation, some Bitcoin wallets made a, like, a web request to random.org to get a random number. And this was fine.
+well, it was a terrible idea, but they used the HTTP
+They used HTTP, not HTTPS, to fetch this, and Random.org got worried about serving things in HTTP, so they redirected all HTTP requests to HTTPS requests, which meant that the randomness used for choosing secret keys on these wallets was, like, a 403 redirect.
+And it was, like, all the same. So, one, people, like, opened up their wallet, and they had, like, much more money than they expected, because they're all sharing the same secret key. And then two, they had no money, because the first person to realize that transferred that to a secure wallet. So sometimes there are reasons not to use…
+True randomness, if you can get away with deterministic randomness, because you could have a random number generator failure.
+Alright.
+So we're… we're getting near the end. I just want to point out that commitments are… commitments and Merkle trees and accumulators are really neat, but, like, one of the things that they're sort of missing is, like.
+you know, I publish a commitment, but how do you know it's actually, like, from me?
+Well, we can use digital signatures to just, like, sign the commitment, or sign the Merkle root, and now we have, like, things where someone can have a bunch of information committed to a Merkle root that is, like, attached to the cryptographic ID in the form of a public key.
+And this gets you, like, authenticated data structures, and it's just a really nice thing to have, to be able to say, like, not only did I commit to this.
+But if you believe that, you know, this is my public key, and you know that the person that holds the signing key for this public key committed to these values.
+Also, there are, multi-signatures, where you can have, like, multiple parties, that share a single signing… single public key, but they all have to participate to produce a signature that verifies under that, single public key.
+And threshold signatures, where, like, there's a single public key, but, you only need, like, say, like, 2 of 3 to be able to produce a valid signature.
+Or, or much larger numbers. Like, let's say, like, you know, 900,000 out of a million.
+And one way to build these that's really, really easy is like… Just take all the, like…
+take Alice, Bob's, and Carol's public key.
+And that's your new combined public key. It's just… there are 3 public keys in a list, and the combined signature is there are 3 signatures. And this is often how multi-signature is done in practice, in Bitcoin.
+But there are, there are protocols, and there is support in Bitcoin, and it is, sometimes used where you can be more clever, and there is actually just, like, a single signature, and a single public key that's not just, like, a list of public keys and signatures.
+And for people that are, curious, one of the assigned readings was for the Musig2 scheme, which is one of these schemes that was developed for Bitcoin, so that you could have multi-signatures, where it's just, like, actually a single public key and a single signature, but multiple signers have to, participate to generate the signature.
+And this is a really nice scheme because,
+You, you save on space, you save on verification, because you just have to verify a single signature and single public key, even if there's multiple parties in a protocol.
+Alright, and that's what I have, for today. I'm happy to answer any questions about, what this is. Reminder, if you haven't already, sign up for the class Discord, register for the class, the source of truth is this GitHub.
+And next week, the lectures will not be given by me, but they will be covering,
+The, state model, of, of, of monies on cryptocurrencies and consensus.
+And so this is the end of class. Class dismissed, but I'm happy to hang out and answer any questions anyone…
+Hess.
