@@ -13,7 +13,7 @@ Time: Tuesdays 1-4 PM
 
 Place: E15-359
 
-Discord: https://discord.gg/NvTWtNXybU
+Discord: Please email us with your name and affiliation for the link
 
 You are welcome to ask us questions via email.  However, if you think your
 question would be useful for others to see, please file it as [an issue](https://github.com/mit-dci/cde-2025/issues)
