@@ -73,7 +73,7 @@ Content covers essential technologies behind Bitcoin and other cryptocurrencies.
 |---|------|------------|
 | 1 | 2025-09-30 | Hash functions |
 | 2 | 2025-10-14 | Digital signatures |
-| 3 | 2025-10-28 | Proof of work |
+| 3 | 2025-10-31 | Proof of work |
 | 4 | 2025-11-12 | UTXOHunt |
 
 All labs are due by 11:59 PM on the day specified.
