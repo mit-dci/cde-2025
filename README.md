@@ -82,10 +82,13 @@ All labs are due by 11:59 PM on the day specified.
 
 You may form groups of 1-4 students and prepare a presentation and a ~5 page paper on one of the following: 
 
-1. Create a new application using the concepts learned in class (see provided list for suggestions)
-2. Update or add a new feature to an existing system like Bitcoin, Ethereum, or another cryptocurrency or decentralized system (see provided list for suggestions)
+1. Create a new application using the concepts learned in class
+2. Update or add a new feature to an existing system like Bitcoin, Ethereum, or another cryptocurrency or decentralized system
 3. Propose a new formalization or framework
-4. Pose and solve a new question or problem
+4. Analyze or systematize a new area
+5. Pose and solve a new question or problem
+
+See project ideas [here](https://github.com/mit-dci/cde-2025/blob/main/project-ideas.md).
 
 Due dates:
 * Proposals (2 pages) are due 2025-11-21 23:59 EDT
